@@ -1,0 +1,69 @@
+import React from 'react'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { ProLayout } from '@ant-design/pro-components'
+import { Link } from 'react-router-dom'
+import logo from '@/assets/images/ai-avator.png'
+import useRouteConfig from './config/route'
+import { Button } from 'antd'
+import { useDispatch } from 'react-redux'
+import { userLogout } from '@/store/modules/userStore'
+const ManagerLayout: React.FC = () => {
+  const dispatch = useDispatch<any>()
+  const navigate = useNavigate()
+  const location = useLocation()
+  const routeConfig = useRouteConfig()
+  const onBackClient = () => {
+    navigate('/', { replace: true })
+  }
+  // 退出登录逻辑
+  const onLogout = async () => {
+    try {
+      const result: any = await dispatch(userLogout()).unwrap()
+      result && navigate('/', { replace: true })
+    } catch (error) {
+      const { message } = error as any
+      console.log('登出失败message', message)
+    }
+  }
+  return (
+    <ProLayout
+      actionsRender={() => {
+        return (
+          <div>
+            <Button onClick={onBackClient} type="text">
+              返回客户端
+            </Button>
+            <Button onClick={onLogout} type="text">
+              退出登录
+            </Button>
+          </div>
+        )
+      }}
+      avatarProps={{ icon: <img alt="avatar" src={logo} /> }}
+      contentStyle={{ padding: 20, minHeight: 0, flex: 1 }}
+      fixedHeader={true}
+      footerRender={() => {
+        return <div>底部</div>
+      }}
+      headerContentRender={() => {
+        return <div style={{ textAlign: 'center' }}>头部</div>
+      }}
+      layout="mix"
+      location={location}
+      logo={logo}
+      menuItemRender={(item, dom) => {
+        if (!item.path) return dom
+        return <Link to={item.path}>{dom}</Link>
+      }}
+      menuProps={{
+        selectedKeys: [location.pathname]
+      }}
+      route={routeConfig}
+      title="管理端"
+    >
+      <Outlet />
+    </ProLayout>
+  )
+}
+
+export default ManagerLayout
