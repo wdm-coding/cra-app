@@ -1,14 +1,16 @@
 import { Button } from 'antd'
-import { useNavigate } from 'react-router'
+import { useNavigate, useLocation } from 'react-router'
 import { useDispatch } from 'react-redux'
 import { userLogin } from '@/store/modules/userStore'
 const Login = () => {
+  const { state } = useLocation()
   const dispatch = useDispatch<any>()
   const navigate = useNavigate()
   const onLogin = async () => {
     try {
       const result: any = await dispatch(userLogin()).unwrap()
-      result && navigate('/', { replace: true })
+      console.log('登录成功result', state)
+      result && navigate(state.from || '/', { replace: true })
     } catch (error) {
       const { message } = error as any
       console.log('登录失败message', message)

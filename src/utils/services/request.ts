@@ -37,7 +37,7 @@ axiosInstance.interceptors.response.use(
     if (error.response?.status === 401) {
       // 未授权，跳转到登录页
       localStorage.removeItem('authToken')
-      window.location.href = '/login'
+      window.location.href = '/'
     }
     return Promise.reject(error)
   }

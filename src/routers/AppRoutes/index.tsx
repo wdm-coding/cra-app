@@ -34,7 +34,6 @@ const convertMenusToRoutes = (menuData: any[], parentElePath: string = ''): Rout
 const AppRoutes = () => {
   const [asyncMenu, setAsyncMenu] = useState(defaultRoutes)
   useEffect(() => {
-    console.log('生成动态路由')
     getServerMenuData().then((res: any) => {
       if (res.length > 0) {
         const newMenu = [...defaultRoutes]
