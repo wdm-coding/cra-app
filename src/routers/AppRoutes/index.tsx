@@ -4,6 +4,7 @@ import { Suspense, useState, useEffect } from 'react'
 import { getServerMenuData } from '@/routers/AppRoutes/asyncRoutes'
 import { lazy } from 'react'
 import RouteGuard from './RouteGuard'
+import { Spin } from 'antd'
 // 转换函数
 const convertMenusToRoutes = (menuData: any[], parentElePath: string = ''): RouteObject[] => {
   return menuData.map((item) => {
@@ -31,6 +32,15 @@ const convertMenusToRoutes = (menuData: any[], parentElePath: string = ''): Rout
     }
   })
 }
+const Fallback = () => {
+  return (
+    <div style={{ width: '100vw', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <Spin />
+      <span style={{ color: '#000', paddingLeft: '20px' }}>加载中···</span>
+    </div>
+  )
+}
+// AppRoutes组件，用于渲染路由和动态加载菜单数据
 const AppRoutes = () => {
   const [asyncMenu, setAsyncMenu] = useState(defaultRoutes)
   useEffect(() => {
@@ -53,7 +63,7 @@ const AppRoutes = () => {
   // 渲染路由组件
   return (
     <RouteGuard>
-      <Suspense fallback="loading------">{routes}</Suspense>
+      <Suspense fallback={<Fallback />}>{routes}</Suspense>
     </RouteGuard>
   )
 }

@@ -1,9 +1,9 @@
 const asyncMenuData = [
   {
     id: 1,
-    name: "动态菜单1",
-    path: "/asyncMenu1",
-    element: "AsyncPagesOne"
+    name: "增删改查示例",
+    path: "/curdDemo",
+    element: "CurdDemo"
   },
   {
     id: 2,

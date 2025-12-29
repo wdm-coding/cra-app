@@ -1,12 +1,13 @@
 import React from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
-import { ProLayout } from '@ant-design/pro-components'
+import { ProLayout, PageContainer } from '@ant-design/pro-components'
 import { Link } from 'react-router-dom'
 import logo from '@/assets/images/ai-avator.png'
 import useRouteConfig from './config/route'
 import { Button } from 'antd'
 import { useDispatch } from 'react-redux'
 import { userLogout } from '@/store/modules/userStore'
+import styles from './index.less'
 const ManagerLayout: React.FC = () => {
   const dispatch = useDispatch<any>()
   const navigate = useNavigate()
@@ -40,10 +41,14 @@ const ManagerLayout: React.FC = () => {
         )
       }}
       avatarProps={{ icon: <img alt="avatar" src={logo} /> }}
-      contentStyle={{ padding: 20, minHeight: 0, flex: 1 }}
+      contentStyle={{ padding: 20, height: 'calc(100vh - 86px)' }}
       fixedHeader={true}
       footerRender={() => {
-        return <div>底部</div>
+        return (
+          <div style={{ height: '30px', backgroundColor: '#f9f9f9', lineHeight: '30px', textAlign: 'center' }}>
+            底部
+          </div>
+        )
       }}
       headerContentRender={() => {
         return <div style={{ textAlign: 'center' }}>头部</div>
@@ -61,7 +66,23 @@ const ManagerLayout: React.FC = () => {
       route={routeConfig}
       title="管理端"
     >
-      <Outlet />
+      <PageContainer
+        children={false}
+        className={styles.managerPageContainer}
+        extraContent={false}
+        header={{
+          title: '',
+          extra: false,
+          style: {
+            padding: 0,
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column'
+          },
+          children: <Outlet />
+        }}
+        style={{ padding: 0, height: '100%' }}
+      />
     </ProLayout>
   )
 }
