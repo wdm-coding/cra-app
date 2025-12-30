@@ -1,7 +1,7 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 import { ProLayout } from '@ant-design/pro-layout'
-import routeConfig from './config/route'
+import getRouteConfig from './config/route'
 import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { Button } from 'antd'
 import { useSelector } from 'react-redux'
@@ -43,7 +43,9 @@ const ClientLayout: React.FC = () => {
           selectedKeys: [location.pathname]
         }}
         onMenuHeaderClick={() => navigate('/')}
-        route={routeConfig}
+        route={{
+          ...getRouteConfig()
+        }}
         title="客户端"
       >
         <Outlet />

@@ -4,7 +4,8 @@ const userSlice = createSlice({
     name: "user",
     initialState: {
         userInfo: Storage.getItem('userInfo') || null,
-        isLogin: !!Storage.getItem('userInfo')
+        isLogin: !!Storage.getItem('userInfo'),
+        pageAuth: null
     },
     reducers: {
         setUserInfo: (state, action) => {
@@ -16,11 +17,15 @@ const userSlice = createSlice({
             Storage.removeItem('userInfo');
             state.userInfo = null;
             state.isLogin = false;
+        },
+        setPageAuth: (state, action) => {
+            state.pageAuth = action.payload;
         }
     },
     selectors: {
         getUserInfo: (state) => state.userInfo,
-        getIsLogin: (state) => state.isLogin
+        getIsLogin: (state) => state.isLogin,
+        getPageAuth: (state) => state.pageAuth
     }
 });
 const userReducer = userSlice.reducer;
@@ -75,7 +80,10 @@ const userLogout = createAsyncThunk('user/logout', async (payload, { dispatch })
 })
 // 导出异步action
 export { userLogin, userLogout }
+// 导出同步action
+const { setPageAuth } = userSlice.actions;
+export { setPageAuth }
 // 导出reducer
 export default userReducer
 // 导出selectors
-export const { getUserInfo, getIsLogin } = userSlice.selectors;
+export const { getUserInfo, getIsLogin, getPageAuth } = userSlice.selectors;

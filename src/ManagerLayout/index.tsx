@@ -1,18 +1,25 @@
-import React from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { ProLayout, PageContainer } from '@ant-design/pro-components'
 import { Link } from 'react-router-dom'
 import logo from '@/assets/images/ai-avator.png'
-import useRouteConfig from './config/route'
+import getRouteConfig from './config/route'
 import { Button } from 'antd'
 import { useDispatch } from 'react-redux'
-import { userLogout } from '@/store/modules/userStore'
+import { userLogout, setPageAuth } from '@/store/modules/userStore'
 import styles from './index.less'
+import React, { useEffect, useState } from 'react'
 const ManagerLayout: React.FC = () => {
+  const [routes, setRoutes] = useState([])
   const dispatch = useDispatch<any>()
   const navigate = useNavigate()
   const location = useLocation()
-  const routeConfig = useRouteConfig()
+  // 存储当前路由的权限信息
+  useEffect(() => {
+    const { routes: routeList, authMap } = getRouteConfig()
+    setRoutes(routeList as [])
+    dispatch(setPageAuth(authMap))
+  }, [dispatch])
+  // 返回客户端逻辑
   const onBackClient = () => {
     navigate('/', { replace: true })
   }
@@ -63,7 +70,9 @@ const ManagerLayout: React.FC = () => {
       menuProps={{
         selectedKeys: [location.pathname]
       }}
-      route={routeConfig}
+      route={{
+        routes
+      }}
       title="管理端"
     >
       <PageContainer
