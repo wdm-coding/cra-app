@@ -24,6 +24,7 @@ function getLazyComponent(elePath: string): ComponentType {
     }
     return lazyComponents[elePath]
   } catch (error) {
+    console.error('组件加载失败：', error)
     return ErrorComponent
   }
 }

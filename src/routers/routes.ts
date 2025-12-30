@@ -1,3 +1,5 @@
+import { m } from "react-router/dist/development/index-react-server-client-Cv5Q9lf0"
+
 export interface RouteItem {
   name?: string
   path: string
@@ -57,6 +59,22 @@ export const routes: RouteItem[] = [
         element: './AsyncPages/CurdDemo',
         icon: 'BarChartOutlined',
         auth: ['add', 'update']
+      },
+      {
+        path: 'AsyncPages',
+        name: '嵌套菜单',
+        children: [
+          {
+            path: 'asyncDemo1',
+            name: '子菜单1',
+            element: './AsyncPages/AsyncPagesOne'
+          },
+          {
+            path: 'asyncDemo2',
+            name: '子菜单2',
+            element: './AsyncPages/AsyncDemo'
+          }
+        ]
       }
     ]
   }

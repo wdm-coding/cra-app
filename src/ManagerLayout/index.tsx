@@ -37,11 +37,14 @@ const ManagerLayout: React.FC = () => {
     <ProLayout
       actionsRender={() => {
         return (
-          <div>
-            <Button onClick={onBackClient} type="text">
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <div style={{ color: '#fff' }}>
+              <div className={styles.title}>欢迎来到管理端</div>
+            </div>
+            <Button onClick={onBackClient} style={{ color: '#fff' }} type="text">
               返回客户端
             </Button>
-            <Button onClick={onLogout} type="text">
+            <Button onClick={onLogout} style={{ color: '#fff' }} type="text">
               退出登录
             </Button>
           </div>
@@ -52,13 +55,18 @@ const ManagerLayout: React.FC = () => {
       fixedHeader={true}
       footerRender={() => {
         return (
-          <div style={{ height: '30px', backgroundColor: '#f9f9f9', lineHeight: '30px', textAlign: 'center' }}>
+          <div
+            style={{
+              height: '30px',
+              backgroundColor: '#f9f9f9',
+              lineHeight: '30px',
+              textAlign: 'center',
+              color: '#fff'
+            }}
+          >
             底部
           </div>
         )
-      }}
-      headerContentRender={() => {
-        return <div style={{ textAlign: 'center' }}>头部</div>
       }}
       layout="mix"
       location={location}
@@ -74,6 +82,23 @@ const ManagerLayout: React.FC = () => {
         routes
       }}
       title="管理端"
+      token={{
+        header: {
+          colorBgHeader: '#1959FF',
+          colorHeaderTitle: '#fff'
+        },
+        sider: {
+          colorBgMenuItemSelected: 'transparent',
+          colorBgMenuItemHover: 'transparent',
+          colorBgMenuItemActive: 'transparent',
+          colorTextMenuSelected: '#1959FF',
+          colorTextMenuActive: '#1959FF',
+          colorTextMenuItemHover: '#000'
+        },
+        pageContainer: {
+          colorBgPageContainer: '#ffffff'
+        }
+      }}
     >
       <PageContainer
         children={false}
