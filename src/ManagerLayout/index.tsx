@@ -51,7 +51,7 @@ const ManagerLayout: React.FC = () => {
         )
       }}
       avatarProps={{ icon: <img alt="avatar" src={logo} /> }}
-      contentStyle={{ padding: 20, height: 'calc(100vh - 86px)' }}
+      contentStyle={{ padding: 20, height: 'calc(100vh - 86px)', backgroundColor: 'rgb(240, 240, 240)' }}
       fixedHeader={true}
       footerRender={() => {
         return (
@@ -111,7 +111,8 @@ const ManagerLayout: React.FC = () => {
             padding: 0,
             height: '100%',
             display: 'flex',
-            flexDirection: 'column'
+            flexDirection: 'column',
+            backgroundColor: '#ffffff'
           },
           children: <Outlet />
         }}

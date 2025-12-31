@@ -1,4 +1,4 @@
-import useAccess from '@/routers/useAccess'
+import useAccess from '@/hooks/useAccess'
 const AccessDemo = () => {
   const access = useAccess()
   return (

@@ -1,11 +1,15 @@
-import {httpService} from '@/utils/services/http'
+import indexDBMock from '@/mock/indexdb-mock'
 export interface User {
-    id: number;
-    name: string;
-    username: string;
-    phone: string;
+  id: number;
+  name: string;
+  username: string;
+  phone: string;
 }
 // 获取用户列表
-export function getUsers(): Promise<User[]> {
-  return httpService.get('https://jsonplaceholder.typicode.com/users')
+export function getUsers(): Promise<{
+  code: number;
+  msg: string;
+  data: User[] | null;
+}> {
+  return indexDBMock('/mock/api/getAllUser')
 }
