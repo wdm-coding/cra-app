@@ -1,9 +1,8 @@
 import { Spin } from 'antd'
 const Fallback = () => {
   return (
-    <div style={{ width: '100vw', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <Spin />
-      <span style={{ color: '#000', paddingLeft: '20px' }}>加载中···</span>
+    <div style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <Spin size="large" />
     </div>
   )
 }

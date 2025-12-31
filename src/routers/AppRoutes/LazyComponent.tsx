@@ -1,36 +1,53 @@
-import { lazy, ComponentType } from 'react'
+import { lazy, Suspense } from 'react'
+import Fallback from './Fallback'
+import { Button } from 'antd'
+import { useNavigate } from 'react-router-dom'
 // 路径映射函数
-const ErrorComponent = () => <div>组件加载失败 </div>
-// 创建懒加载组件映射
-const lazyComponents: Record<string, ComponentType> = {}
-function getLazyComponent(elePath: string): ComponentType {
-  try {
-    if (elePath.startsWith('./')) {
-      const pageName = elePath.replace('./', '')
-      if (!lazyComponents[elePath]) {
-        lazyComponents[elePath] = lazy(() => import(`@/pages/${pageName}/index`))
-      }
-      return lazyComponents[elePath]
-    }
-    if (elePath.startsWith('@/')) {
-      const componentPath = elePath.replace('@/', '')
-      if (!lazyComponents[elePath]) {
-        lazyComponents[elePath] = lazy(() => import(`@/${componentPath}/index`))
-      }
-      return lazyComponents[elePath]
-    }
-    if (!lazyComponents[elePath]) {
-      lazyComponents[elePath] = lazy(() => import(`@/pages/${elePath}/index`))
-    }
-    return lazyComponents[elePath]
-  } catch (error) {
-    console.error('组件加载失败：', error)
-    return ErrorComponent
-  }
+const ErrorComponent = () => {
+  const navigate = useNavigate()
+  return (
+    <div className="flex flex-col items-center justify-center h-full">
+      <img alt="404" className="w-[300px]" src={require('@/assets/images/error/loadFail.png')} />
+      <span
+        className="text-2xl p-[15px]"
+        style={{
+          fontFamily: 'AlimamaShuHeiTi',
+          color: '#17A6FF',
+          fontWeight: 'bold'
+        }}
+      >
+        组件加载失败
+      </span>
+      <Button onClick={() => navigate(-1)} style={{ backgroundColor: '#006CD1', color: '#fff' }}>
+        返回
+      </Button>
+    </div>
+  )
 }
 function LazyComponent({ elePath }: { elePath: string }) {
-  const Component = getLazyComponent(elePath)
-  return <Component />
+  const LazyComp = lazy(async () => {
+    try {
+      if (elePath?.startsWith('./')) {
+        const pageName = elePath.replace('./', '')
+        const comp = await import(`@/pages/${pageName}/index`)
+        return comp
+      }
+      if (elePath?.startsWith('@/')) {
+        const pageName = elePath.replace('@/', '')
+        const comp = await import(`@/${pageName}/index`)
+        return comp
+      }
+      const comp = await import(`@/${elePath}/index`)
+      return comp
+    } catch {
+      return { default: ErrorComponent }
+    }
+  })
+  return (
+    <Suspense fallback={<Fallback />}>
+      <LazyComp />
+    </Suspense>
+  )
 }
 
 export default LazyComponent

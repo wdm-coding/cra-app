@@ -1,10 +1,10 @@
 import { RouteItem } from '../routes'
 import { useRoutes, RouteObject, Navigate } from 'react-router-dom'
-import { Suspense, useCallback, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import RouteGuard from './RouteGuard'
-import Fallback from './Fallback'
-import LazyComponent from './LazyComponent'
 import patchRoutes from './patchRoutes'
+import LazyComponent from './LazyComponent'
+import NotFound from '@/pages/NotFound'
 // AppRoutes组件，用于渲染路由和动态加载菜单数据
 const AppRoutes = ({ routers }: { routers: RouteItem[] }) => {
   // 转换函数
@@ -36,17 +36,12 @@ const AppRoutes = ({ routers }: { routers: RouteItem[] }) => {
   const routesConfig = useMemo(() => {
     const result = convertMenusToRoutes(routers)
     const all = patchRoutes(result)
-    console.log('路由转换：', all)
     return all
   }, [routers, convertMenusToRoutes])
   // 使用useRoutes渲染路由组件
-  const routes = useRoutes([...routesConfig, { path: '*', element: <div>404----404</div> }])
+  const routes = useRoutes([...routesConfig, { path: '*', element: <NotFound /> }])
   // 渲染路由组件
-  return (
-    <RouteGuard>
-      <Suspense fallback={<Fallback />}>{routes}</Suspense>
-    </RouteGuard>
-  )
+  return <RouteGuard>{routes}</RouteGuard>
 }
 
 export default AppRoutes
