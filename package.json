@@ -28,7 +28,6 @@
     "craco-less": "^3.0.1",
     "less": "^4.4.2",
     "less-loader": "^12.3.0",
-    "rc-scrollbars": "^1.1.6",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-redux": "^9.2.0",

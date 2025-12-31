@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux'
 import { userLogout, setPageAuth } from '@/store/modules/userStore'
 import styles from './index.less'
 import React, { useEffect, useState } from 'react'
+import ScrollBar from '@/components/ScrollBar'
 const ManagerLayout: React.FC = () => {
   const [routes, setRoutes] = useState([])
   const dispatch = useDispatch<any>()
@@ -51,23 +52,8 @@ const ManagerLayout: React.FC = () => {
         )
       }}
       avatarProps={{ icon: <img alt="avatar" src={logo} /> }}
-      contentStyle={{ padding: 20, height: 'calc(100vh - 86px)', backgroundColor: 'rgb(240, 240, 240)' }}
+      contentStyle={{ padding: 0, height: 'calc(100vh - 56px)', backgroundColor: 'rgb(240, 240, 240)' }}
       fixedHeader={true}
-      footerRender={() => {
-        return (
-          <div
-            style={{
-              height: '30px',
-              backgroundColor: '#f9f9f9',
-              lineHeight: '30px',
-              textAlign: 'center',
-              color: '#fff'
-            }}
-          >
-            底部
-          </div>
-        )
-      }}
       layout="mix"
       location={location}
       logo={logo}
@@ -114,7 +100,22 @@ const ManagerLayout: React.FC = () => {
             flexDirection: 'column',
             backgroundColor: '#ffffff'
           },
-          children: <Outlet />
+          // 自定义配置
+          children: (
+            <ScrollBar
+              alwaysShowTrack={true}
+              autoHide={true}
+              hideDelay={300}
+              scrollbarColor="rgba(0, 0, 0, 0.3)"
+              scrollbarHoverColor="rgba(0, 0, 0, 0.3)"
+              scrollbarWidth={6}
+              style={{ height: '100%' }}
+            >
+              <div style={{ padding: '20px', backgroundColor: '#f1f1f1' }}>
+                <Outlet />
+              </div>
+            </ScrollBar>
+          )
         }}
         style={{ padding: 0, height: '100%' }}
       />
