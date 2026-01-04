@@ -18,16 +18,35 @@ const CurdDemo = () => {
     },
     {
       title: '用户名',
+      dataIndex: 'username'
+    },
+    {
+      title: '组织名称',
+      dataIndex: 'orgName'
+    },
+    {
+      title: '统一社会信用代码',
+      dataIndex: 'creditCode'
+    },
+    {
+      title: '组织类型',
+      dataIndex: 'orgType'
+    },
+    {
+      title: '负责人姓名',
       dataIndex: 'name'
     },
     {
-      title: '年龄',
-      dataIndex: 'age'
+      title: '负责人证件号',
+      dataIndex: 'idCard'
     },
     {
-      title: '邮箱',
-      dataIndex: 'email',
-      hideInSearch: true
+      title: '负责人手机号',
+      dataIndex: 'phone'
+    },
+    {
+      title: '负责人邮箱',
+      dataIndex: 'email'
     },
     {
       title: '操作',
@@ -67,7 +86,7 @@ const CurdDemo = () => {
         const { code, data } = await getUsers()
         if (code === 0 && data !== null) {
           return {
-            data,
+            data: [],
             success: true
           }
         } else {
