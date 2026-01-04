@@ -2,7 +2,7 @@ import { useLocation, useNavigate, Navigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useMemo, useEffect } from 'react'
 // 路由白名单
-const whiteList = ['/', '/client', '/login', '/403', '/404']
+const whiteList = ['/', '/client', '/login', '/403', '/404', '/client/home']
 // 路由守卫组件
 const RouteGuard = ({ children }: { children: React.ReactNode }) => {
   const loginStatus = useSelector((state: any) => state.user.isLogin)

@@ -1,0 +1,29 @@
+.can-scroll-table-wrap{
+    width: 100%;
+  .table-custom-wrap{
+      width: 100%;
+      :global{
+        .ant-spin-nested-loading{
+          height: 100%;
+          .ant-spin-container{
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            .ant-table{
+              min-height: 0;
+              flex: 1;
+              .ant-table-container{
+                height: 100%;
+                .ant-table-body{
+                  height: calc(100% - 50px);
+                  table{
+                    min-height: 100%;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+  }
+}

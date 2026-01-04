@@ -111,7 +111,7 @@ const ManagerLayout: React.FC = () => {
               scrollbarWidth={6}
               style={{ height: '100%' }}
             >
-              <div style={{ padding: '20px', backgroundColor: '#f1f1f1' }}>
+              <div style={{ padding: '20px', height: '100%' }}>
                 <Outlet />
               </div>
             </ScrollBar>

@@ -44,10 +44,8 @@ class IndexedDB<T = any> {
   public open(stores: StoreSchema[]): Promise<IDBDatabase> {
     // 如果正在打开，返回同一个 promise
     if (this.isOpening && this.openingPromise) {
-      console.log('数据库正在打开，返回现有的打开请求')
       return this.openingPromise
     }
-    console.log('正在打开数据库...')
     this.isOpening = true
     this.openingPromise = new Promise((resolve, reject) => {
       const request = indexedDB.open(this.dbName, this.version)
@@ -64,19 +62,16 @@ class IndexedDB<T = any> {
 
       // 数据库打开成功或升级
       request.onsuccess = () => {
-        console.log('数据库打开成功')
         this.db = request.result
         this.isOpening = false
         // 监听版本变化
         this.db.onversionchange = () => {
           this.db?.close()
-          console.log('数据库版本已变更，请刷新页面')
         }
         resolve(this.db)
       }
       // 监听数据库升级事件，创建对象仓库和索引
       request.onupgradeneeded = event => {
-        console.log('数据库升级中...')
         const db = (event.target as IDBOpenDBRequest).result
         const transaction = (event.target as IDBOpenDBRequest).transaction
         if (!transaction) {
@@ -211,7 +206,6 @@ class IndexedDB<T = any> {
       const store = transaction.objectStore(storeName as string)
       const request = store.delete(key)
       request.onsuccess = () => {
-        console.log('删除数据成功')
         resolve()
       }
       request.onerror = () => reject(request.error)
@@ -257,7 +251,6 @@ class IndexedDB<T = any> {
   }
   // 关闭数据库连接
   close(): void {
-    console.log('关闭数据库连接...')
     if (this.db) {
       this.db.close()
       this.db = null
@@ -280,7 +273,6 @@ class IndexedDB<T = any> {
   }
   // 确保数据库连接已建立
   private async ensureConnection(): Promise<void> {
-    console.log('确保数据库连接已建立...')
     if (!this.db) {
       throw new Error('数据库未连接，请先调用 open 方法')
     }

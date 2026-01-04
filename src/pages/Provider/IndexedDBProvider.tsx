@@ -36,7 +36,6 @@ const IndexedDBProvider: React.FC<{ children: React.ReactNode }> = ({ children }
   useEffect(() => {
     const init = async () => {
       if (!dbInstance) {
-        console.log('创建新的 IndexedDB 实例')
         dbInstance = new IndexedDB(DB_CONFIG.dbName, DB_CONFIG.version)
         await dbInstance.open(DB_CONFIG.stores)
         setDb(dbInstance)
