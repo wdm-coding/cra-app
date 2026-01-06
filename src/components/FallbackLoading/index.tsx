@@ -1,5 +1,5 @@
 import { Spin } from 'antd'
-const Fallback = () => {
+const FallbackLoading = () => {
   return (
     <div
       style={{
@@ -16,4 +16,4 @@ const Fallback = () => {
   )
 }
 
-export default Fallback
+export default FallbackLoading

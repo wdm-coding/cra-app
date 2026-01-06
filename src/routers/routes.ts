@@ -1,5 +1,3 @@
-import { m } from "react-router/dist/development/index-react-server-client-Cv5Q9lf0"
-
 export interface RouteItem {
   name?: string
   path: string
@@ -13,7 +11,7 @@ export interface RouteItem {
 export const routes: RouteItem[] = [
   {
     path: '/',
-    element: './Redirect',
+    redirect: '/client',
   },
   {
     path: '/login',
@@ -26,12 +24,7 @@ export const routes: RouteItem[] = [
       {
         path: 'home',
         name: '客户端首页',
-        element: './Home'
-      },
-      {
-        path: 'reduxStore',
-        name: '数据管理',
-        element: './ReduxStore'
+        element: './Client/Home',
       }
     ]
   },
@@ -40,41 +33,42 @@ export const routes: RouteItem[] = [
     element: '@/ManagerLayout',
     children: [
       {
-        path: 'home',
-        name: '管理端首页',
-        element: './Home',
-        icon: 'AreaChartOutlined',
-        auth: ['add', 'delete', 'update']
+        path: 'dashboard',
+        name: '数据看板',
+        element: './Manager/Dashboard',
+        icon: 'AreaChartOutlined'
       },
       {
         path: 'accessDemo',
         name: '权限示例',
-        element: './AsyncPages/AccessDemo',
+        element: './Manager/AccessDemo',
         icon: 'ShareAltOutlined',
         auth: ['add', 'delete']
       },
       {
         path: 'curdDemo',
         name: '增删改查示例',
-        element: './AsyncPages/CurdDemo',
+        element: './Manager/CurdDemo',
         icon: 'BarChartOutlined',
         auth: ['add', 'update']
+      }
+    ]
+  }
+]
+export const fatchMenus: RouteItem[] = [
+  {
+    path: 'AsyncPages',
+    name: '嵌套菜单',
+    children: [
+      {
+        path: 'asyncDemo1',
+        name: '下载base64图片示例',
+        element: './AsyncPages/AsyncPagesOne'
       },
       {
-        path: 'AsyncPages',
-        name: '嵌套菜单',
-        children: [
-          {
-            path: 'asyncDemo1',
-            name: '子菜单1',
-            element: './AsyncPages/AsyncPagesOne'
-          },
-          {
-            path: 'asyncDemo2',
-            name: '子菜单2',
-            element: './AsyncPages/AsyncDemo'
-          }
-        ]
+        path: 'asyncDemo2',
+        name: '子菜单2',
+        element: './AsyncPages/AsyncDemo'
       }
     ]
   }

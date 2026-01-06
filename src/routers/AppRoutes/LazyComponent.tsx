@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react'
-import Fallback from './Fallback'
+import FallbackLoading from '@/components/FallbackLoading'
 import { Button } from 'antd'
 import { useNavigate } from 'react-router-dom'
 // 路径映射函数
@@ -44,7 +44,7 @@ function LazyComponent({ elePath }: { elePath: string }) {
     }
   })
   return (
-    <Suspense fallback={<Fallback />}>
+    <Suspense fallback={<FallbackLoading />}>
       <LazyComp />
     </Suspense>
   )

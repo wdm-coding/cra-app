@@ -10,6 +10,7 @@ const Home: React.FC = () => {
         src={require('@/assets/images/banner01.png')}
         style={{ width: '100%', height: '650px', objectFit: 'cover' }}
       />
+      {isLogin}
     </div>
   )
 }

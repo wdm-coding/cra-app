@@ -9,11 +9,10 @@ const Login = () => {
   const onLogin = async () => {
     try {
       const result: any = await dispatch(userLogin()).unwrap()
-      console.log('登录成功result', state)
-      result && navigate(state.from || '/', { replace: true })
+      result && navigate(state?.from || '/', { replace: true })
     } catch (error) {
       const { message } = error as any
-      console.log('登录失败message', message)
+      throw new Error(message)
     }
   }
   return (
