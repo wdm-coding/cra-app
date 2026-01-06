@@ -23,25 +23,40 @@ const AppRoutes = () => {
         routeItem.element = <LazyComponent elePath={item.element} />
       }
       if (item.children && item.children.length > 0) {
-        const children = item.children.slice(1)
         routeItem.children = [
           {
             index: true,
-            element: <LazyComponent elePath={item.children[0].element as string} />
+            element: <Navigate to={item.children[0].path} />
           },
-          ...convertMenusToRoutes(children)
+          ...convertMenusToRoutes(item.children)
         ]
       }
 
       return routeItem
     })
   }, [])
+  const patchClientRoutes = useCallback(() => {
+    const allMenus = []
+    let managerChildren = null
+    const otherMenus = routesMenu.filter((item) => item.path !== '/manager')
+    allMenus.push(...otherMenus)
+    routesMenu.forEach((item) => {
+      if (item.path === '/manager') {
+        managerChildren = {
+          ...item,
+          children: [...(item.children as []), ...dynamicMenu]
+        }
+        allMenus.push(managerChildren)
+      }
+    })
+    return allMenus
+  }, [dynamicMenu])
   // 转换菜单数据为路由配置
   const routesConfig = useMemo(() => {
-    const result = convertMenusToRoutes(routesMenu)
-    console.log('routesConfig', result)
+    const all = patchClientRoutes()
+    const result = convertMenusToRoutes(all)
     return result
-  }, [convertMenusToRoutes])
+  }, [convertMenusToRoutes, patchClientRoutes])
   // 使用useRoutes渲染路由组件
   const routes = useRoutes([...routesConfig, { path: '*', element: <NotFound /> }])
   // 渲染路由组件

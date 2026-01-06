@@ -4,23 +4,24 @@ import { Link } from 'react-router-dom'
 import logo from '@/assets/images/ai-avator.png'
 import getRouteConfig from './config/route'
 import { Button } from 'antd'
-import { useDispatch } from 'react-redux'
-import { userLogout, setPageAuth } from '@/store/modules/userStore'
+import { useDispatch, useSelector } from 'react-redux'
+import { userLogout, setPageAuth, getDynamicMenu } from '@/store/modules/userStore'
 import styles from './index.less'
 import React, { useEffect, useState } from 'react'
 import ScrollBar from '@/components/ScrollBar'
 import ErrorBoundary from '@/components/ErrorBoundary'
 const ManagerLayout: React.FC = () => {
+  const dynamicMenu = useSelector(getDynamicMenu)
   const [routes, setRoutes] = useState([])
   const dispatch = useDispatch<any>()
   const navigate = useNavigate()
   const location = useLocation()
   // 存储当前路由的权限信息
   useEffect(() => {
-    const { routes: routeList, authMap } = getRouteConfig()
+    const { routes: routeList, authMap } = getRouteConfig(dynamicMenu)
     setRoutes(routeList as [])
     dispatch(setPageAuth(authMap))
-  }, [dispatch])
+  }, [dispatch, dynamicMenu])
   // 返回客户端逻辑
   const onBackClient = () => {
     navigate('/', { replace: true })

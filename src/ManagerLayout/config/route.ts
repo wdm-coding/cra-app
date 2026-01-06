@@ -26,12 +26,12 @@ const convertRoutes = (routesData: RouteItem[], parentPath: string = ''): MenuDa
     return result
   })
 }
-const getRouteConfig = (): {
+const getRouteConfig = (dynamicMenu: any[]): {
   routes: MenuDataItem[],
   authMap: Record<string, string[]>
 } => {
   const managerList = routesConfig.find((item) => item.path === '/manager')?.children || []
-  const routes = convertRoutes(managerList)
+  const routes = convertRoutes([...managerList, ...dynamicMenu as any[]])
   return { routes, authMap }
 }
 export default getRouteConfig
