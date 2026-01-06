@@ -3,12 +3,32 @@ const CracoLessPlugin = require('craco-less')
 module.exports = {
   // 开发环境配置
   devServer: {
+    // 不立即打开浏览器
+    open: false,
+    // 端口号
+    port: 3000,
+    // 跨域配置
     proxy: {
       '/api': {
         target: 'http://172.19.5.39:3001',
         changeOrigin: true,
-        logLevel: 'debug',
+        logLevel: 'info',
         pathRewrite: { '^/api': '/api' }
+      },
+      '/registerApi': {
+        target: 'https://118.183.58.131:8180',
+        changeOrigin: true,
+        secure: false,
+        logLevel: 'info',
+        pathRewrite: { '^/registerApi': '' }
+      }
+    },
+    client: {
+      overlay: {
+        // 关闭错误提示遮罩层
+        errors: false,
+        warnings: false,
+        runtimeErrors: false
       }
     }
   },
@@ -16,14 +36,6 @@ module.exports = {
   webpack: {
     alias: {
       '@': path.resolve(__dirname, 'src')
-    },
-    configure: (webpackConfig) => {
-      // 找到ReactRefreshWebpackPlugin并修改配置
-      const plugin = webpackConfig.plugins.find((plugin) => plugin.constructor.name === 'ReactRefreshWebpackPlugin')
-      if (plugin) {
-        plugin.options.overlay = false
-      }
-      return webpackConfig
     }
   },
   plugins: [

@@ -30,7 +30,8 @@ axiosInstance.interceptors.request.use(
 // 响应拦截器
 axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => {
-    return response;
+    const { data } = response
+    return data;
   },
   (error) => {
     // 统一错误处理
@@ -39,7 +40,7 @@ axiosInstance.interceptors.response.use(
       localStorage.removeItem('authToken')
       window.location.href = '/'
     }
-    return Promise.reject(error)
+    throw error;
   }
 );
 

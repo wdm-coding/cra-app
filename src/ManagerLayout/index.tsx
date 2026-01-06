@@ -9,6 +9,7 @@ import { userLogout, setPageAuth } from '@/store/modules/userStore'
 import styles from './index.less'
 import React, { useEffect, useState } from 'react'
 import ScrollBar from '@/components/ScrollBar'
+import ErrorBoundary from '@/components/ErrorBoundary'
 const ManagerLayout: React.FC = () => {
   const [routes, setRoutes] = useState([])
   const dispatch = useDispatch<any>()
@@ -36,6 +37,7 @@ const ManagerLayout: React.FC = () => {
   }
   return (
     <ProLayout
+      ErrorBoundary={ErrorBoundary}
       actionsRender={() => {
         return (
           <div style={{ display: 'flex', alignItems: 'center' }}>
