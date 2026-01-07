@@ -70,19 +70,25 @@ const userLogin = createAsyncThunk('user/login', async (payload, { dispatch }) =
     // 登录后获取菜单数据
     const { code, data }: any = await mockLogin();
     if (code === 0) {
-        // 执行同步action，保存用户信息
-        dispatch(userSlice.actions.setUserInfo(data));
+        dispatch(userSlice.actions.setUserInfo(data)); // 执行同步action，保存用户信息
         // 获取菜单数据
-        const { code: menuCode, data: dynamicMenu }: any = await mockGetDynamicMenu();
-        if (menuCode === 0) {
-            // 执行同步action，保存菜单数据
-            dispatch(userSlice.actions.setDynamicMenu(dynamicMenu));
-            return { data, dynamicMenu };
-        } else {
-            throw new Error('获取菜单失败');
+        const res = await dispatch(getUserMenus()).unwrap()
+        if (res) {
+            return true;
         }
     } else {
         throw new Error('登录失败');
+    }
+})
+// 异步获取菜单数据action
+const getUserMenus = createAsyncThunk('user/getMenus', async (payload, { dispatch }) => {
+    // 获取菜单数据
+    const { code, data }: any = await mockGetDynamicMenu();
+    if (code === 0) {
+        dispatch(userSlice.actions.setDynamicMenu(data));
+        return true;
+    } else {
+        throw new Error('获取菜单失败');
     }
 })
 // 异步登出action
@@ -108,7 +114,7 @@ const userLogout = createAsyncThunk('user/logout', async (payload, { dispatch })
     }
 })
 // 导出异步action
-export { userLogin, userLogout }
+export { userLogin, userLogout, getUserMenus }
 // 导出同步action
 const { setPageAuth } = userSlice.actions;
 export { setPageAuth }

@@ -62,13 +62,24 @@ export const fatchMenus: RouteItem[] = [
     children: [
       {
         path: 'asyncDemo1',
-        name: '下载base64图片示例',
-        element: './AsyncPages/AsyncPagesOne'
+        name: '下载base64图片',
+        element: './Manager/AsyncPages/AsyncPagesOne'
       },
       {
         path: 'asyncDemo2',
         name: '子菜单2',
-        element: './AsyncPages/AsyncDemo'
+        children: [
+          {
+            path: 'asyncDemo21',
+            name: '子菜单2-1',
+            element: './Manager/AsyncPages/AsyncPagesTwo'
+          },
+          {
+            path: 'asyncDemo22',
+            name: '子菜单2-2',
+            element: './Manager/AsyncPages/AsyncPagesOne'
+          }
+        ]
       }
     ]
   }

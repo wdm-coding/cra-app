@@ -55,6 +55,7 @@ const AppRoutes = () => {
   const routesConfig = useMemo(() => {
     const all = patchClientRoutes()
     const result = convertMenusToRoutes(all)
+    console.log('routesConfig', result)
     return result
   }, [convertMenusToRoutes, patchClientRoutes])
   // 使用useRoutes渲染路由组件

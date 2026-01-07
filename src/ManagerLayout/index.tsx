@@ -5,11 +5,12 @@ import logo from '@/assets/images/ai-avator.png'
 import getRouteConfig from './config/route'
 import { Button } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-import { userLogout, setPageAuth, getDynamicMenu } from '@/store/modules/userStore'
+import { userLogout, setPageAuth, getDynamicMenu, getUserMenus } from '@/store/modules/userStore'
 import styles from './index.less'
 import React, { useEffect, useState } from 'react'
 import ScrollBar from '@/components/ScrollBar'
 import ErrorBoundary from '@/components/ErrorBoundary'
+import { ReloadOutlined } from '@ant-design/icons'
 const ManagerLayout: React.FC = () => {
   const dynamicMenu = useSelector(getDynamicMenu)
   const [routes, setRoutes] = useState([])
@@ -36,14 +37,29 @@ const ManagerLayout: React.FC = () => {
       console.log('登出失败message', message)
     }
   }
+  // 重新加载页面逻辑
+  const onReload = async () => {
+    // 1. 重新获取用户信息和动态菜单
+    try {
+      const res = await dispatch(getUserMenus()).unwrap()
+      if (res) {
+        window.location.reload()
+      }
+    } catch (error) {
+      throw new Error('重新加载失败')
+    }
+  }
   return (
     <ProLayout
       ErrorBoundary={ErrorBoundary}
       actionsRender={() => {
         return (
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <div style={{ color: '#fff' }}>
+            <div className="flex" style={{ color: '#fff' }}>
               <div className={styles.title}>欢迎来到管理端</div>
+              <div style={{ margin: '0 20px', cursor: 'pointer' }}>
+                <ReloadOutlined onClick={onReload} />
+              </div>
             </div>
             <Button onClick={onBackClient} style={{ color: '#fff' }} type="text">
               返回客户端
@@ -114,7 +130,7 @@ const ManagerLayout: React.FC = () => {
               scrollbarWidth={6}
               style={{ height: '100%' }}
             >
-              <div style={{ padding: '20px', height: '100%' }}>
+              <div style={{ height: '100%', padding: 20 }}>
                 <Outlet />
               </div>
             </ScrollBar>
