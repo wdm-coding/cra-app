@@ -7,7 +7,10 @@ const DB_CONFIG = {
     {
       name: 'users',
       options: { keyPath: 'id', autoIncrement: true },
-      indexes: [{ name: 'username', keyPath: 'username', unique: true }]
+      indexes: [
+        { name: 'username', keyPath: 'username', unique: true },
+        { name: 'name', keyPath: 'name', unique: false }
+      ]
     }
   ]
 }

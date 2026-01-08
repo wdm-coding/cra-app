@@ -11,12 +11,6 @@ interface StoreSchema {
   }>
 }
 
-interface IndexedDBConfig {
-  dbName: string
-  version?: number
-  stores: StoreSchema[]
-}
-// 辅助类型
 interface StoreInfo {
   keyPath: string
   autoIncrement: boolean
@@ -185,12 +179,10 @@ class IndexedDB<T = any> {
     data: T[K]
   ): Promise<IDBValidKey> {
     await this.ensureConnection()
-
     return new Promise<IDBValidKey>((resolve, reject) => {
       const transaction = this.db!.transaction(storeName as string, 'readwrite')
       const store = transaction.objectStore(storeName as string)
       const request = store.put(data)
-
       request.onsuccess = () => resolve(request.result)
       request.onerror = () => reject(request.error)
     })

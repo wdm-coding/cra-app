@@ -72,12 +72,12 @@ export const fatchMenus: RouteItem[] = [
           {
             path: 'asyncDemo21',
             name: '子菜单2-1',
-            element: './Manager/AsyncPages/AsyncPagesTwo'
+            element: './Manager/AsyncPages/AsyncChildrenPages/AsyncChildrenOne'
           },
           {
             path: 'asyncDemo22',
             name: '子菜单2-2',
-            element: './Manager/AsyncPages/AsyncPagesOne'
+            element: './Manager/AsyncPages/AsyncChildrenPages/AsyncChildrenTwo'
           }
         ]
       }
