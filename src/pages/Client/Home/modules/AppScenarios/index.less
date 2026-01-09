@@ -1,0 +1,55 @@
+.appScenarios{
+  width: 100%;
+  background: url('~@/assets/images/client/module-bg1.jpg') no-repeat center / cover;
+  background-size: 100% 100%;
+  padding-top:50px;
+  padding-bottom: 50px;
+  .scenariosWrap{
+    margin: 32px auto 0;
+    display: flex;
+    align-items: center;
+    .scenariosLeft{
+      width: 308px;
+      height: 525px;
+      border: 1px solid #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, .06);
+      max-height: 525px;
+      overflow-y: auto;
+      scrollbar-width: none;
+      .listItem{
+        align-items: center;
+        color: #333;
+        cursor: pointer;
+        display: flex;
+        font-size: 18px;
+        height: 87px;
+        padding: 22px;
+        transition: all .25s;
+        width: 100%;
+        &:hover{
+          background: linear-gradient(270deg, #00a4eb, #006bd3);
+          box-shadow: 0 0 0 1px #00a4eb;
+          color: #fff;
+          font-weight: 600;
+        }
+      }
+      .active{
+        background: linear-gradient(270deg, #00a4eb, #006bd3);
+        box-shadow: 0 0 0 1px #00a4eb;
+        color: #fff;
+        font-weight: 600;
+      }
+    }
+    .scenariosRight{
+      min-width: 0;
+      flex: 1;
+      margin-left: 20px;
+      height: 525px;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, .06);
+      padding: 32px;
+    }
+  }
+}

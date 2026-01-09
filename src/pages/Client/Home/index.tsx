@@ -1,6 +1,7 @@
 import styles from './index.less'
 import { getIsLogin } from '@/store/modules/userStore'
 import { useSelector } from 'react-redux'
+import AppScenarios from './modules/AppScenarios'
 const Home: React.FC = () => {
   const isLogin = useSelector(getIsLogin)
   return (
@@ -10,7 +11,7 @@ const Home: React.FC = () => {
         src={require('@/assets/images/banner01.png')}
         style={{ width: '100%', height: '650px', objectFit: 'cover' }}
       />
-      {isLogin}
+      <AppScenarios />
     </div>
   )
 }
