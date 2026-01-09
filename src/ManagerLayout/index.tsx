@@ -3,9 +3,14 @@ import { ProLayout, PageContainer } from '@ant-design/pro-components'
 import { Link } from 'react-router-dom'
 import logo from '@/assets/images/ai-avator.png'
 import getRouteConfig from './config/route'
-import { Button } from 'antd'
+import { Button, Watermark } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-import { userLogout, setPageAuth, getDynamicMenu, getUserMenus } from '@/store/modules/userStore'
+import {
+  userLogout,
+  setPageAuth,
+  getDynamicMenu,
+  getUserMenus
+} from '@/store/modules/userStore'
 import styles from './index.less'
 import React, { useEffect, useState } from 'react'
 import ScrollBar from '@/components/ScrollBar'
@@ -61,7 +66,11 @@ const ManagerLayout: React.FC = () => {
                 <ReloadOutlined onClick={onReload} />
               </div>
             </div>
-            <Button onClick={onBackClient} style={{ color: '#fff' }} type="text">
+            <Button
+              onClick={onBackClient}
+              style={{ color: '#fff' }}
+              type="text"
+            >
               返回客户端
             </Button>
             <Button onClick={onLogout} style={{ color: '#fff' }} type="text">
@@ -71,7 +80,11 @@ const ManagerLayout: React.FC = () => {
         )
       }}
       avatarProps={{ icon: <img alt="avatar" src={logo} /> }}
-      contentStyle={{ padding: 0, height: 'calc(100vh - 56px)', backgroundColor: 'rgb(240, 240, 240)' }}
+      contentStyle={{
+        padding: 0,
+        height: 'calc(100vh - 56px)',
+        backgroundColor: 'rgb(240, 240, 240)'
+      }}
       fixedHeader={true}
       layout="mix"
       location={location}
@@ -105,39 +118,41 @@ const ManagerLayout: React.FC = () => {
         }
       }}
     >
-      <PageContainer
-        children={false}
-        className={styles.managerPageContainer}
-        extraContent={false}
-        header={{
-          title: '',
-          extra: false,
-          style: {
-            padding: 0,
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            backgroundColor: '#ffffff'
-          },
-          // 自定义配置
-          children: (
-            <ScrollBar
-              alwaysShowTrack={true}
-              autoHide={true}
-              hideDelay={300}
-              scrollbarColor="rgba(0, 0, 0, 0.3)"
-              scrollbarHoverColor="rgba(0, 0, 0, 0.3)"
-              scrollbarWidth={6}
-              style={{ height: '100%' }}
-            >
-              <div style={{ height: '100%', padding: 20 }}>
-                <Outlet />
-              </div>
-            </ScrollBar>
-          )
-        }}
-        style={{ padding: 0, height: '100%' }}
-      />
+      <Watermark content="wdm" style={{ height: '100%' }}>
+        <PageContainer
+          children={false}
+          className={styles.managerPageContainer}
+          extraContent={false}
+          header={{
+            title: '',
+            extra: false,
+            style: {
+              padding: 0,
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              backgroundColor: '#ffffff'
+            },
+            // 自定义配置
+            children: (
+              <ScrollBar
+                alwaysShowTrack={true}
+                autoHide={true}
+                hideDelay={300}
+                scrollbarColor="rgba(0, 0, 0, 0.3)"
+                scrollbarHoverColor="rgba(0, 0, 0, 0.3)"
+                scrollbarWidth={6}
+                style={{ height: '100%' }}
+              >
+                <div style={{ height: '100%', padding: 20 }}>
+                  <Outlet />
+                </div>
+              </ScrollBar>
+            )
+          }}
+          style={{ padding: 0, height: '100%' }}
+        />
+      </Watermark>
     </ProLayout>
   )
 }

@@ -1,10 +1,11 @@
-import { Button, Input, message as messageApi } from 'antd'
+import { Button, Input, message as messageApi, Skeleton } from 'antd'
 import { useNavigate, useLocation } from 'react-router'
 import { useDispatch } from 'react-redux'
 import { userLogin } from '@/store/modules/userStore'
 import styles from './index.less'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 const Login = () => {
+  const [skeLoading, setSkeLoading] = useState<boolean>(false)
   const [messageIns, contextHolder] = messageApi.useMessage()
   const [isShowError, setIsShowError] = useState<boolean>(false)
   const { state } = useLocation()
@@ -31,22 +32,48 @@ const Login = () => {
     }
     setAccb(e.target.value)
   }
+  useEffect(() => {
+    setSkeLoading(true)
+    const timer = setTimeout(() => {
+      setSkeLoading(false)
+    }, 2000)
+    return () => clearTimeout(timer)
+  }, [setSkeLoading])
   return (
     <div className={styles.loginWrap}>
       {contextHolder}
       <div className={styles.loginBox}>
-        <div className="flex items-center" style={{ position: 'relative' }}>
-          <span style={{ fontSize: 16, marginRight: 15 }}>accb:</span>
-          <Input onChange={onChange} placeholder="输入accb登录" value={accb} />
-          {isShowError && (
-            <div style={{ position: 'absolute', left: 55, top: 35 }}>
-              <span style={{ fontSize: 14, color: 'red' }}>请输入accb进行登录</span>
-            </div>
-          )}
-          <Button loading={loading} onClick={onLogin} style={{ marginLeft: 15 }} type="primary">
-            登录
-          </Button>
-        </div>
+        <Skeleton
+          active
+          loading={skeLoading}
+          paragraph={{
+            rows: 1
+          }}
+        >
+          <div className="flex items-center" style={{ position: 'relative' }}>
+            <span style={{ fontSize: 16, marginRight: 15 }}>accb:</span>
+            <Input
+              onChange={onChange}
+              placeholder="输入accb登录"
+              value={accb}
+            />
+            {isShowError && (
+              <div style={{ position: 'absolute', left: 55, top: 35 }}>
+                <span style={{ fontSize: 14, color: 'red' }}>
+                  请输入accb进行登录
+                </span>
+              </div>
+            )}
+            <Button
+              loading={loading}
+              onClick={onLogin}
+              style={{ marginLeft: 15 }}
+              type="primary"
+            >
+              登录
+            </Button>
+          </div>
+        </Skeleton>
       </div>
     </div>
   )

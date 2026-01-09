@@ -1,4 +1,12 @@
-import { Upload, Form, Button, UploadFile, UploadProps, Image, GetProp } from 'antd'
+import {
+  Upload,
+  Form,
+  Button,
+  UploadFile,
+  UploadProps,
+  Image,
+  GetProp
+} from 'antd'
 import { useState } from 'react'
 import { PlusOutlined, UploadOutlined } from '@ant-design/icons'
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0]
@@ -41,7 +49,8 @@ const UploadDemo = () => {
       ]
     })
   }
-  const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) => setFileList(newFileList)
+  const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) =>
+    setFileList(newFileList)
   const handlePreview: UploadProps['onPreview'] = async (file: UploadFile) => {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj as FileType)
@@ -69,7 +78,13 @@ const UploadDemo = () => {
           rules={[{ required: true, message: '请上传文件' }]}
           valuePropName="fileList"
         >
-          <Upload action="https://httpbin.org/post" maxCount={1} multiple name="file" onPreview={handlePreview}>
+          <Upload
+            action="https://httpbin.org/post"
+            maxCount={1}
+            multiple
+            name="file"
+            onPreview={handlePreview}
+          >
             <Button>上传</Button>
           </Upload>
         </Form.Item>
