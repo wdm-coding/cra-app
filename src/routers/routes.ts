@@ -57,6 +57,11 @@ export const routes: RouteItem[] = [
 ]
 export const fatchMenus: RouteItem[] = [
   {
+    path: 'uploadDemo',
+    name: '上传示例',
+    element: './Manager/UploadDemo'
+  },
+  {
     path: 'AsyncPages',
     name: '嵌套菜单',
     children: [
@@ -80,6 +85,17 @@ export const fatchMenus: RouteItem[] = [
             element: './Manager/AsyncPages/AsyncChildrenPages/AsyncChildrenTwo'
           }
         ]
+      }
+    ]
+  },
+  {
+    path: 'functionNode',
+    name: '功能节点',
+    children: [
+      {
+        path: 'mainInfo',
+        name: '主体信息展示',
+        element: './Manager/FunctionNode/MainInfo'
       }
     ]
   }

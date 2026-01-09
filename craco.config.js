@@ -21,6 +21,13 @@ module.exports = {
         secure: false,
         logLevel: 'info',
         pathRewrite: { '^/registerApi': '' }
+      },
+      '/functionApi': {
+        target: 'https://118.183.58.131:8443',
+        changeOrigin: true,
+        secure: false,
+        logLevel: 'info',
+        pathRewrite: { '^/functionApi': '' }
       }
     },
     client: {

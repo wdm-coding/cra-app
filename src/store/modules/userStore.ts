@@ -39,8 +39,10 @@ const userSlice = createSlice({
 });
 const userReducer = userSlice.reducer;
 // 异步登录action
-const mockLogin = () => {
+const mockLogin = (accb: string) => {
     return new Promise((resolve, reject) => {
+        // 把accb写入cookier
+        document.cookie = `accb=${accb};path=/;`;
         setTimeout(() => {
             const mockUserInfo = {
                 username: 'testuser',
@@ -66,9 +68,10 @@ const mockGetDynamicMenu = () => {
         }, 500);
     });
 }
-const userLogin = createAsyncThunk('user/login', async (payload, { dispatch }) => {
+const userLogin = createAsyncThunk('user/login', async (payload: string, { dispatch }) => {
+    console.log('执行登录操作', payload)
     // 登录后获取菜单数据
-    const { code, data }: any = await mockLogin();
+    const { code, data }: any = await mockLogin(payload);
     if (code === 0) {
         dispatch(userSlice.actions.setUserInfo(data)); // 执行同步action，保存用户信息
         // 获取菜单数据
