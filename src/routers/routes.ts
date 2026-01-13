@@ -51,6 +51,12 @@ export const routes: RouteItem[] = [
         element: './Manager/CurdDemo',
         icon: 'BarChartOutlined',
         auth: ['add', 'update']
+      },
+      {
+        path: 'nodeDemo',
+        name: 'NodeApi测试',
+        element: './Manager/NodeDemo',
+        icon: 'BarChartOutlined'
       }
     ]
   }

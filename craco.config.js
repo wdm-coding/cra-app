@@ -6,7 +6,7 @@ module.exports = {
     // 不立即打开浏览器
     open: false,
     // 端口号
-    port: 3000,
+    port: 3030,
     // 跨域配置
     proxy: {
       '/api': {
@@ -28,6 +28,13 @@ module.exports = {
         secure: false,
         logLevel: 'info',
         pathRewrite: { '^/functionApi': '' }
+      },
+      '/nodeApi': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+        logLevel: 'info',
+        pathRewrite: { '^/nodeApi': '' }
       }
     },
     client: {
