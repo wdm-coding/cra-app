@@ -8,6 +8,11 @@ const Home: React.FC = () => {
     <div className={styles.homeWrap}>
       <img
         alt="banner01"
+        src={require('@/assets/images/client/5.png')}
+        style={{ width: '500px' }}
+      />
+      <img
+        alt="banner01"
         src={require('@/assets/images/banner01.png')}
         style={{ width: '100%', height: '650px', objectFit: 'cover' }}
       />
