@@ -29,12 +29,12 @@ module.exports = {
         logLevel: 'info',
         pathRewrite: { '^/functionApi': '' }
       },
-      '/nodeApi': {
+      '/expressApi': {
         target: 'http://localhost:3000',
         changeOrigin: true,
         secure: false,
         logLevel: 'info',
-        pathRewrite: { '^/nodeApi': '' }
+        pathRewrite: { '^/expressApi': '/api' }
       }
     },
     client: {

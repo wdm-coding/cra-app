@@ -6,11 +6,7 @@ const Home: React.FC = () => {
   const isLogin = useSelector(getIsLogin)
   return (
     <div className={styles.homeWrap}>
-      <img
-        alt="banner01"
-        src={require('@/assets/images/client/5.png')}
-        style={{ width: '500px' }}
-      />
+      {isLogin ? <div>已登录</div> : <div>未登录</div>}
       <img
         alt="banner01"
         src={require('@/assets/images/banner01.png')}

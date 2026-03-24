@@ -6,6 +6,7 @@ export interface RouteItem {
   children?: RouteItem[],
   icon?: string
   auth?: string[]
+  hideInMenu?: boolean
 }
 
 export const routes: RouteItem[] = [
@@ -25,6 +26,11 @@ export const routes: RouteItem[] = [
         path: 'home',
         name: '客户端首页',
         element: './Client/Home',
+      },
+      {
+        path: 'annualDisclosure',
+        name: '信息披露',
+        element: './Client/AnnualDisclosure',
       }
     ]
   },
@@ -102,6 +108,52 @@ export const fatchMenus: RouteItem[] = [
         path: 'mainInfo',
         name: '主体信息展示',
         element: './Manager/FunctionNode/MainInfo'
+      }
+    ]
+  },
+  {
+    path: 'registerPlatform',
+    name: "登记平台",
+    children: [
+      {
+        path: 'annualDisclosure',
+        name: '年度信息披露管理',
+        children: [
+          {
+            path: 'implementOrg',
+            name: '实施机构',
+            element: './Manager/RegisterPlatform/AnnualDisclosure/ImplementOrg'
+          },
+          {
+            path: 'implementOrgForm',
+            name: '实施机构表单',
+            element: './Manager/RegisterPlatform/AnnualDisclosure/ImplementOrg/ImplementOrgForm',
+            hideInMenu: true
+          },
+          {
+            path: 'ImplementOrgDetail',
+            name: '实施机构详情',
+            element: './Manager/RegisterPlatform/AnnualDisclosure/ImplementOrg/ImplementOrgDetail',
+            hideInMenu: true
+          },
+          {
+            path: 'operationOrg',
+            name: '运营机构',
+            element: './Manager/RegisterPlatform/AnnualDisclosure/OperationOrg'
+          },
+          {
+            path: 'operationOrgForm',
+            name: '运营机构表单',
+            element: './Manager/RegisterPlatform/AnnualDisclosure/OperationOrg/OperationOrgForm',
+            hideInMenu: true
+          },
+          {
+            path: 'operationOrgDetail',
+            name: '运营机构详情',
+            element: './Manager/RegisterPlatform/AnnualDisclosure/OperationOrg/OperationOrgDetail',
+            hideInMenu: true
+          }
+        ]
       }
     ]
   }

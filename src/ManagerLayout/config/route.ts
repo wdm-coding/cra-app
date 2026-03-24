@@ -26,12 +26,28 @@ const convertRoutes = (routesData: RouteItem[], parentPath: string = ''): MenuDa
     return result
   })
 }
-const getRouteConfig = (dynamicMenu: any[]): {
+const getRouteConfig = (dynamicMenu: RouteItem[]): {
   routes: MenuDataItem[],
   authMap: Record<string, string[]>
 } => {
   const managerList = routesConfig.find((item) => item.path === '/manager')?.children || []
-  const routes = convertRoutes([...managerList, ...dynamicMenu as any[]])
+  const afterFilterMenu = filterRoutes(dynamicMenu)
+  console.log('afterFilterMenu', afterFilterMenu)
+  const routes = convertRoutes([...managerList, ...afterFilterMenu])
   return { routes, authMap }
+}
+// 从dynamicMenu中递归筛选出hideInMenu为false的路由
+const filterRoutes = (routes: RouteItem[]): RouteItem[] => {
+  return routes
+    .filter(item => !item.hideInMenu)
+    .map(item => {
+      // 创建一个新的对象副本，而不是修改原对象
+      const newItem = { ...item };
+      if (item.children && item.children.length > 0) {
+        // 递归处理子项，并将结果赋值给新对象
+        newItem.children = filterRoutes(item.children as RouteItem[]);
+      }
+      return newItem; // 返回新的、经过处理的对象
+    });
 }
 export default getRouteConfig
