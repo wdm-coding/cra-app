@@ -31,6 +31,12 @@ export const routes: RouteItem[] = [
         path: 'annualDisclosure',
         name: '信息披露',
         element: './Client/AnnualDisclosure',
+      },
+      {
+        path: 'annualDisclosure/detail',
+        name: '信息披露详情',
+        element: './Client/AnnualDisclosure/Detail',
+        hideInMenu: true,
       }
     ]
   },

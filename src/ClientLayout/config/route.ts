@@ -15,7 +15,22 @@ const convertRoutes = (routesData: RouteItem[]): MenuDataItem[] => {
 }
 const getRouteConfig = () => {
   const clientList = routesConfig.find((item) => item.path === '/client')?.children || []
-  const routes = convertRoutes(clientList)
+  const afterFilterMenu = filterRoutes(clientList)
+  const routes = convertRoutes(afterFilterMenu)
   return { routes }
+}
+// 从dynamicMenu中递归筛选出hideInMenu为false的路由
+const filterRoutes = (routes: RouteItem[]): RouteItem[] => {
+  return routes
+    .filter(item => !item.hideInMenu)
+    .map(item => {
+      // 创建一个新的对象副本，而不是修改原对象
+      const newItem = { ...item };
+      if (item.children && item.children.length > 0) {
+        // 递归处理子项，并将结果赋值给新对象
+        newItem.children = filterRoutes(item.children as RouteItem[]);
+      }
+      return newItem; // 返回新的、经过处理的对象
+    });
 }
 export default getRouteConfig

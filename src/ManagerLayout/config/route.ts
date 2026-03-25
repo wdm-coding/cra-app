@@ -32,7 +32,6 @@ const getRouteConfig = (dynamicMenu: RouteItem[]): {
 } => {
   const managerList = routesConfig.find((item) => item.path === '/manager')?.children || []
   const afterFilterMenu = filterRoutes(dynamicMenu)
-  console.log('afterFilterMenu', afterFilterMenu)
   const routes = convertRoutes([...managerList, ...afterFilterMenu])
   return { routes, authMap }
 }
