@@ -128,6 +128,9 @@ const OperationOrgForm: React.FC = () => {
       valueType: 'dateRange',
       formItemProps: {
         rules: [{ required: true, message: '请输入运营期限' }]
+      },
+      render: (text, record, _, action) => {
+        return record.operationTerm?.join('至') || '-'
       }
     },
     {

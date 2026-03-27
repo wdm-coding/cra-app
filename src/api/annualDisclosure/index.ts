@@ -29,3 +29,31 @@ export function addOpt(data: any) {
 export function deleteOpt(id: string) {
   return httpService.delete(`/expressApi/andc/opt/delete/${id}`)
 }
+
+export function getAnnualDisclosureList(params: any) {
+  return new Promise((resolve, reject) => {
+    resolve({
+      list: [
+        {
+          id: 1,
+          orgName: '实施机构1',
+          email: '123@qq.com',
+          address: '北京市海淀区',
+        },
+        {
+          id: 2,
+          orgName: '操作机构2',
+          email: '456@qq.com',
+          address: '北京市海淀区',
+        },
+        {
+          id: 3,
+          orgName: '操作机构3',
+          email: '789@qq.com',
+          address: '北京市海淀区',
+        }
+      ],
+      total: 100
+    })
+  })
+}
