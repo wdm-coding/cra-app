@@ -75,6 +75,18 @@ export const routes: RouteItem[] = [
 ]
 export const fatchMenus: RouteItem[] = [
   {
+    path: 'ProComponents',
+    name: 'ProAntd组件库',
+    icon: 'AreaChartOutlined',
+    children: [
+      {
+        path: 'editableProTable',
+        name: 'EditableProTable',
+        element: './Manager/ProComponents/EditableProTable'
+      }
+    ]
+  },
+  {
     path: 'uploadDemo',
     name: '上传示例',
     element: './Manager/UploadDemo'

@@ -235,10 +235,14 @@ const ImplementOrgForm: React.FC = () => {
         {/* 实施机构基础信息区 */}
         <ProForm.Group title="实施机构基础信息区">
           <ProFormText
+            fieldProps={{
+              maxLength: 128
+            }}
             label="实施机构名称"
             name="implementOrgName"
             placeholder="请输入内容"
             rules={[{ required: true, message: '请输入实施机构名称' }]}
+            tooltip="县级以上地方各级人民政府或国家行业主管部门结合授权模式确定的、具体负责组织开展授权运营活动的单位全称。示例：XX省XX市大数据管理中心"
           />
           <ProFormText
             label="统一社会信用代码"
@@ -250,7 +254,7 @@ const ImplementOrgForm: React.FC = () => {
             label="地址（含邮编）"
             name="address"
             placeholder="请输入内容"
-            rules={[{ required: true, message: '请输入地址' }]}
+            rules={[{ required: true, message: '请输入地址', type: 'email' }]}
           />
           <ProFormText
             label="邮箱"
