@@ -285,8 +285,18 @@ const ImplementOrgForm: React.FC = () => {
             name="authorizedDataResourceName"
             placeholder="请输入内容"
             rules={[
-              { required: true, message: '请输入已授权公共数据资源名称' }
+              { required: true, message: '请输入已授权公共数据资源名称' },
+              //名称 唯一性校验
+              () => ({
+                validator: (_, value: string) => {
+                  if (value === '2') {
+                    return Promise.reject('名称已存在')
+                  }
+                  return Promise.resolve()
+                }
+              })
             ]}
+            validateTrigger="onBlur"
           />
           <ProFormText
             label="登记确认单编号"
