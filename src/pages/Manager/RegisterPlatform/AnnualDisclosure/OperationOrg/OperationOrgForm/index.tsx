@@ -109,9 +109,19 @@ const OperationOrgForm: React.FC = () => {
       title: '已授权公共数据资源名称',
       dataIndex: 'authorizedDataResourceName',
       key: 'authorizedDataResourceName',
-      formItemProps: {
-        rules: [{ required: true, message: '请输入已授权公共数据资源名称' }]
-      }
+      formItemProps: (a, b) => ({
+        rules: [
+          { required: true, message: '请输入已授权公共数据资源名称' },
+          () => ({
+            validator: (_, value) => {
+              if (value?.length > 50) {
+                return Promise.reject('已授权公共数据资源名称长度不能超过50')
+              }
+              return Promise.resolve()
+            }
+          })
+        ]
+      })
     },
     {
       title: '确认单编号',
