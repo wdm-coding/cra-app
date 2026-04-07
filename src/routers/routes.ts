@@ -126,6 +126,11 @@ export const fatchMenus: RouteItem[] = [
         path: 'mainInfo',
         name: '主体信息展示',
         element: './Manager/FunctionNode/MainInfo'
+      },
+      {
+        path: 'certLogin',
+        name: '证书登录',
+        element: './Manager/FunctionNode/CertLogin'
       }
     ]
   },
