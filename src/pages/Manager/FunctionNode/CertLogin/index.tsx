@@ -111,19 +111,20 @@ const CertLogin: React.FC = () => {
   }
 
   return (
-    <div className={classnames(styles.tabContainer)}>
-      {tabItems.map((item) => (
-        <div
-          className={classnames(styles.tabItem, {
-            [styles.activeItem]: activeKey === item.key
-          })}
-          key={item.key}
-          onClick={() => onChange(item.key)}
-        >
-          {item.label}
-        </div>
-      ))}
-
+    <div className={classnames(styles.container)}>
+      <div className={classnames(styles.tabContainer)}>
+        {tabItems.map((item) => (
+          <div
+            className={classnames(styles.tabItem, {
+              [styles.activeItem]: activeKey === item.key
+            })}
+            key={item.key}
+            onClick={() => onChange(item.key)}
+          >
+            {item.label}
+          </div>
+        ))}
+      </div>
       {activeKey === 'account' ? AccountLoginContent : CertLoginContent}
     </div>
   )
