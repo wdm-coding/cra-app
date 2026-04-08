@@ -2,8 +2,13 @@ import { BrowserRouter } from 'react-router-dom'
 import AppRoutes from '@/routers/AppRoutes'
 import IndexedDBProvider from '@/pages/Provider/IndexedDBProvider'
 import ErrorBoundary from '@/components/ErrorBoundary'
-
+import { App as AntdApp } from 'antd'
+import { useEffect } from 'react'
 function App() {
+  const { message } = AntdApp.useApp()
+  useEffect(() => {
+    window.$message = message
+  }, [message])
   return (
     <ErrorBoundary>
       <BrowserRouter>
@@ -16,5 +21,10 @@ function App() {
     </ErrorBoundary>
   )
 }
+const IndexApp = () => (
+  <AntdApp className="h-full w-full">
+    <App />
+  </AntdApp>
+)
 
-export default App
+export default IndexApp
