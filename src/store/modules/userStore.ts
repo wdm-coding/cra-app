@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import Storage from "@/utils/storage";
 import { fatchMenus } from "@/routers/routes";
+import { userAccountLogin, getExpressUserInfo } from "@/api/express/user";
 const userSlice = createSlice({
     name: "user",
     initialState: {
@@ -65,20 +66,45 @@ const mockGetDynamicMenu = () => {
         }, 500);
     });
 }
-const userLogin = createAsyncThunk('user/login', async (payload: string, { dispatch }) => {
-    console.log('执行登录操作', payload)
+type LoginPayload = {
+    type: 'accb' | 'account' | 'cert',
+    loginParams: any
+}
+const userLogin = createAsyncThunk('user/login', async (payload: LoginPayload, { dispatch }) => {
     // 登录后获取菜单数据
-    const { code, data }: any = await mockLogin(payload);
-    if (code === 0) {
-        dispatch(userSlice.actions.setUserInfo(data)); // 执行同步action，保存用户信息
-        // 获取菜单数据
-        const res = await dispatch(getUserMenus()).unwrap()
-        if (res) {
-            return true;
+    if (payload.type === 'accb') {
+        const { code, data }: any = await mockLogin(payload.loginParams.accb || '');
+        if (code === 0) {
+            dispatch(userSlice.actions.setUserInfo(data)); // 执行同步action，保存用户信息
+            const res = await dispatch(getUserMenus()).unwrap() // 获取菜单数据
+            if (res) {
+                return true;
+            }
+        } else {
+            throw new Error('登录失败');
         }
-    } else {
-        throw new Error('登录失败');
     }
+    if (payload.type === 'account') {
+        const { code, data }: any = await userAccountLogin(payload.loginParams)
+        if (code === 0) {
+            Storage.setItem('authToken', data);
+            // 获取用户信息
+            const userRes: any = await getExpressUserInfo()
+            if (userRes.code === 0) {
+                dispatch(userSlice.actions.setUserInfo(userRes.data)); // 执行同步action，保存用户信息
+                const res = await dispatch(getUserMenus()).unwrap() // 获取菜单数据
+                if (res) {
+                    return true;
+                }
+            }
+        } else {
+            throw new Error('登录失败');
+        }
+    }
+    if (payload.type === 'cert') {
+        throw new Error('cert登录方式');
+    }
+    throw new Error('登录方式不存在');
 })
 // 异步获取菜单数据action
 const getUserMenus = createAsyncThunk('user/getMenus', async (payload, { dispatch }) => {
@@ -91,9 +117,12 @@ const getUserMenus = createAsyncThunk('user/getMenus', async (payload, { dispatc
         throw new Error('获取菜单失败');
     }
 })
-// 异步登出action
+// 模拟登出action
 const mockLogout = () => {
     return new Promise((resolve) => {
+        // 模拟登出请求
+        document.cookie = 'accb=;path=/;max-age=0;';
+        // 模拟登出成功
         setTimeout(() => {
             resolve({
                 code: 0,
@@ -102,6 +131,7 @@ const mockLogout = () => {
         }, 500);
     });
 }
+// 异步登出action
 const userLogout = createAsyncThunk('user/logout', async (payload, { dispatch }) => {
     // 模拟登出请求
     const { code }: any = await mockLogout();

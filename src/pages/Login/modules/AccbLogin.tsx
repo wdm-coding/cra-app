@@ -21,7 +21,7 @@ const AccbLogin: React.FC = () => {
     if (!accb) return setIsShowError(true)
     setLoading(true)
     try {
-      const result: any = await dispatch(userLogin(accb)).unwrap()
+      const result: any = await dispatch(userLogin({ type: 'accb', loginParams: { accb } })).unwrap()
       setLoading(false)
       window.$message.success('登录成功')
       result && navigate(state?.from || '/', { replace: true })

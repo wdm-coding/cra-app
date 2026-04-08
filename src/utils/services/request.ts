@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-
+import Storage from "@/utils/storage";
 // 基础配置
 const baseConfig: AxiosRequestConfig = {
   baseURL: '',
@@ -16,9 +16,9 @@ const axiosInstance: AxiosInstance = axios.create(baseConfig);
 axiosInstance.interceptors.request.use(
   (config) => {
     // 添加认证token
-    const token = localStorage.getItem('authToken');
+    const token = Storage.getItem('authToken');
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.Authorization = `${token}`;
     }
     return config;
   },
@@ -31,7 +31,17 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => {
     const { data } = response
-    return data;
+    const { code, msg } = data
+    if (typeof code === 'number') {
+      if (code === 0) {
+        return data
+      } else {
+        window.$message.error(msg)
+        throw new Error(msg)
+      }
+    } else {
+      return data;
+    }
   },
   (error) => {
     // 统一错误处理
