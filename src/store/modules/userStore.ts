@@ -44,10 +44,7 @@ const mockLogin = (accb: string) => {
         // 把accb写入cookier
         document.cookie = `accb=${accb};path=/;`;
         setTimeout(() => {
-            const mockUserInfo = {
-                username: 'testuser',
-                age: 25
-            };
+            const mockUserInfo = { username: 'Accb-User' };
             resolve({
                 code: 0,
                 data: mockUserInfo,

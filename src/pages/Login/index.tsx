@@ -18,7 +18,7 @@ const Login = () => {
   const tabItems: any[] = [
     {
       key: 'accb',
-      label: 'accb登录',
+      label: 'ACCB登录',
       component: AccbLogin
     },
     {
@@ -38,7 +38,14 @@ const Login = () => {
   return (
     <div className={styles.loginWrap}>
       <div className={styles.loginBox}>
-        <Skeleton active loading={skeLoading}>
+        <Skeleton
+          active
+          loading={skeLoading}
+          paragraph={{
+            rows: 4
+          }}
+          style={{ height: 200, padding: '0 40px' }}
+        >
           <div className={styles.loginTabs}>
             {tabItems.map((item) => (
               <div
@@ -59,6 +66,7 @@ const Login = () => {
             })()}
           </div>
         </Skeleton>
+        {skeLoading && <Skeleton.Button active style={{ margin: '0 40px', width: 360 }} />}
       </div>
     </div>
   )

@@ -1,8 +1,9 @@
-import { Button, Input, message as messageApi, Skeleton } from 'antd'
+import { Button, Input, Typography } from 'antd'
 import { useNavigate, useLocation } from 'react-router'
 import { useDispatch } from 'react-redux'
 import { userLogin } from '@/store/modules/userStore'
 import { useState } from 'react'
+const { Title, Text } = Typography
 const AccbLogin: React.FC = () => {
   const [accb, setAccb] = useState<string>('')
   const [isShowError, setIsShowError] = useState<boolean>(false)
@@ -31,15 +32,18 @@ const AccbLogin: React.FC = () => {
     }
   }
   return (
-    <div className="flex items-center" style={{ position: 'relative' }}>
-      <span style={{ fontSize: 16, marginRight: 15 }}>accb:</span>
-      <Input onChange={onChange} placeholder="输入accb登录" value={accb} />
-      {isShowError && (
-        <div style={{ position: 'absolute', left: 55, top: 35 }}>
-          <span style={{ fontSize: 14, color: 'red' }}>请输入accb进行登录</span>
-        </div>
-      )}
-      <Button loading={loading} onClick={onLogin} style={{ marginLeft: 15 }} type="primary">
+    <div>
+      <Title level={3}>accb登录</Title>
+      <Text type="secondary">请输入accb-cookier完成登录</Text>
+      <div className="flex items-center" style={{ position: 'relative', marginTop: 24 }}>
+        <Input onChange={onChange} placeholder="输入accb登录" value={accb} />
+        {isShowError && (
+          <div style={{ position: 'absolute', left: 0, top: 35 }}>
+            <span style={{ fontSize: 14, color: 'red' }}>请输入accb进行登录</span>
+          </div>
+        )}
+      </div>
+      <Button loading={loading} onClick={onLogin} style={{ width: '100%', marginTop: 54 }} type="primary">
         登录
       </Button>
     </div>
