@@ -1,15 +1,28 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
+import { LogoutOutlined } from '@ant-design/icons'
 import { ProLayout } from '@ant-design/pro-layout'
 import getRouteConfig from './config/route'
 import { useNavigate, useLocation, Link } from 'react-router-dom'
-import { Button } from 'antd'
-import { useSelector } from 'react-redux'
+import { Button, Dropdown } from 'antd'
+import { useDispatch, useSelector } from 'react-redux'
+import { userLogout } from '@/store/modules/userStore'
 import ScrollBar from '@/components/ScrollBar'
 const ClientLayout: React.FC = () => {
   const { isLogin, userInfo } = useSelector((state: any) => state.user)
   const navigate = useNavigate()
   const location = useLocation()
+  const dispatch = useDispatch<any>()
+  // 退出登录逻辑
+  const onLogout = async () => {
+    try {
+      const result: any = await dispatch(userLogout()).unwrap()
+      result && navigate('/', { replace: true })
+    } catch (error) {
+      const { message } = error as any
+      console.log('登出失败message', message)
+    }
+  }
   return (
     <div>
       <ProLayout
@@ -20,12 +33,10 @@ const ClientLayout: React.FC = () => {
                 前往管理端
               </Button>
               {isLogin ? (
-                <span style={{ color: '#ff0000' }}>
-                  欢迎，{userInfo.username}
-                </span>
+                <span style={{ color: '#ff0000' }}>欢迎，{userInfo.username}</span>
               ) : (
-                <Button onClick={() => navigate('/login')} type="text">
-                  登录
+                <Button onClick={() => navigate('/login')} style={{ color: '#1677ff' }} type="text">
+                  去登录
                 </Button>
               )}
             </div>
@@ -34,7 +45,26 @@ const ClientLayout: React.FC = () => {
         avatarProps={
           isLogin
             ? {
-                src: 'https://avatars1.githubusercontent.com/u/8186664?s=460&v=4'
+                src: '/imgs/xz-avator.jpeg',
+                render: (_, defaultDom) => {
+                  return (
+                    <Dropdown
+                      menu={{
+                        items: [
+                          {
+                            key: 'logout',
+                            icon: <LogoutOutlined />,
+                            label: '退出登录',
+                            onClick: () => onLogout()
+                          }
+                        ]
+                      }}
+                      placement="bottomCenter"
+                    >
+                      {defaultDom}
+                    </Dropdown>
+                  )
+                }
               }
             : false
         }

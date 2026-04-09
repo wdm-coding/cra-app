@@ -179,5 +179,16 @@ export const fatchMenus: RouteItem[] = [
         ]
       }
     ]
+  },
+  {
+    path: 'systemManage',
+    name: '系统管理',
+    children: [
+      {
+        path: 'userManage',
+        name: '用户管理',
+        element: './Manager/SystemManage/UserManage'
+      }
+    ]
   }
 ]

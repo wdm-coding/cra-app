@@ -1,9 +1,4 @@
-import {
-  ActionType,
-  PageContainer,
-  ProColumns,
-  ProTable
-} from '@ant-design/pro-components'
+import { ActionType, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components'
 import { Button, Popconfirm } from 'antd'
 import { OperationOrgSearchForm, OperationOrgItem } from './types'
 import { useNavigate } from 'react-router-dom'
@@ -61,18 +56,10 @@ const OperationOrg: React.FC = () => {
       key: 'action',
       valueType: 'option',
       render: (_, record) => [
-        <Button
-          key="detail"
-          onClick={() => jumpToOperationOrgDetail(record)}
-          type="link"
-        >
+        <Button key="detail" onClick={() => jumpToOperationOrgDetail(record)} type="link">
           详情
         </Button>,
-        <Button
-          key="edit"
-          onClick={() => jumpToOperationOrgForm(record)}
-          type="link"
-        >
+        <Button key="edit" onClick={() => jumpToOperationOrgForm(record)} type="link">
           修改
         </Button>,
         <Popconfirm
@@ -130,11 +117,7 @@ const OperationOrg: React.FC = () => {
           labelWidth: 'auto'
         }}
         toolBarRender={() => [
-          <Button
-            key="add"
-            onClick={() => jumpToOperationOrgForm()}
-            type="primary"
-          >
+          <Button key="add" onClick={() => jumpToOperationOrgForm()} type="primary">
             增加
           </Button>
         ]}
