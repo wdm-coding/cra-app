@@ -155,10 +155,26 @@ const UserManage: React.FC = () => {
   }
   // 下载证书
   const onDownloadCertificate = async (record: DataType) => {
-    try {
-      await downloadCertificate(record.id as string)
-      window.$message.success('下载证书成功')
-    } catch (error) {
+    const { code,data }: any = await downloadCertificate(record.id as string)
+    if (code === 0) {
+      // 1. 强制指定 MIME Type 为 application/x-pkcs12
+      // 这样浏览器就知道它是证书文件，而不是“未知二进制文件”
+      const correctBlob = new Blob([data.blob], { type: 'application/x-pkcs12' });
+
+      // 2. 创建下载链接
+      const url = window.URL.createObjectURL(correctBlob);
+      const link = document.createElement('a');
+      link.href = url;
+      
+      // 3. 确保文件名后缀正确
+      link.setAttribute('download', `${record.id}_certificate.p12`);
+      document.body.appendChild(link);
+      link.click();
+      // 清理资源
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url); 
+    }
+    else {
       window.$message.error('下载证书失败')
     }
   }

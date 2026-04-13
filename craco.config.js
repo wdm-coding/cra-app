@@ -30,7 +30,7 @@ module.exports = {
         pathRewrite: { '^/functionApi': '' }
       },
       '/expressApi': {
-        target: 'http://localhost:3000',
+        target: 'https://localhost:3000',
         changeOrigin: true,
         secure: false,
         logLevel: 'info',

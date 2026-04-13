@@ -31,16 +31,29 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => {
     const { data } = response
-    const { code, msg } = data
-    if (typeof code === 'number') {
-      if (code === 0) {
-        return data
-      } else {
-        window.$message.error(msg)
-        throw new Error(msg)
+    if (data instanceof Blob) {
+      const contentDisposition = response.headers['content-disposition']
+      const fileName = contentDisposition.split('=')[1]
+      return {
+        code: 0,
+        msg: 'success',
+        data: {
+          fileName,
+          blob: data,
+        }
       }
     } else {
-      return data;
+      const { code, msg } = data
+      if (typeof code === 'number') {
+        if (code === 0) {
+          return data
+        } else {
+          window.$message.error(msg)
+          throw new Error(msg)
+        }
+      } else {
+        return data;
+      }
     }
   },
   (error) => {

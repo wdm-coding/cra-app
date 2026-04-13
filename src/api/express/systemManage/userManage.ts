@@ -49,5 +49,7 @@ export function cancelCertificate(userId: string) {
 
 // 下载证书
 export function downloadCertificate(userId: string) {
-  return httpService.get(`/expressApi/user/downloadCert/${userId}`)
+  return httpService.get(`/expressApi/user/downloadCert/${userId}`, null, {
+    responseType: 'blob',
+  })
 }

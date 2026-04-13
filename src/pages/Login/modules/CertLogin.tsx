@@ -1,9 +1,18 @@
 import { Button, Card, Typography } from 'antd'
 import { FileTextOutlined } from '@ant-design/icons'
+import { userCertLogin } from '@/api/express/user'
+
 const { Title, Text } = Typography
 const CertLogin: React.FC = () => {
-  const onCertLogin = () => {
+  const onCertLogin = async () => {
     console.log('登录')
+    const { code }: any = await userCertLogin()
+    // if (code === 0) {
+    //   window.$message.success('登录成功')
+    // }
+    // else {
+    //   window.$message.error('登录失败')
+    // }
   }
   return (
     <div>
