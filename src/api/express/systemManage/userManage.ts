@@ -36,3 +36,18 @@ export function updateUser(data: {
 export function deleteUser(id: string,) {
   return httpService.delete(`/expressApi/user/delete/${id}`)
 }
+
+// 申请证书
+export function applyCertificate(userId: string) {
+  return httpService.post(`/expressApi/user/applyCert/${userId}`)
+}
+
+// 注销证书
+export function cancelCertificate(userId: string) {
+  return httpService.post(`/expressApi/user/cancelCert/${userId}`)
+}
+
+// 下载证书
+export function downloadCertificate(userId: string) {
+  return httpService.get(`/expressApi/user/downloadCert/${userId}`)
+}

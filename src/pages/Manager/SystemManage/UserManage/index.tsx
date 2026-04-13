@@ -4,7 +4,12 @@ import { useRef, useState } from 'react'
 import { getUserList } from '@/api/express/systemManage/userManage'
 import dayjs from 'dayjs'
 import UserFormDrawer from './modules/UserFormDrawer'
-import { deleteUser } from '@/api/express/systemManage/userManage'
+import {
+  deleteUser,
+  applyCertificate,
+  cancelCertificate,
+  downloadCertificate
+} from '@/api/express/systemManage/userManage'
 interface DataType {
   id: string
   name: string
@@ -12,6 +17,7 @@ interface DataType {
   email: string
   phone: string
   age: number
+  cert?: boolean
   createdAt?: string
 }
 interface Params {
@@ -62,6 +68,35 @@ const UserManage: React.FC = () => {
             <Button key="edit" onClick={() => onEdit(record)} type="link">
               编辑
             </Button>
+            {record.cert ? (
+              <>
+                <Button
+                  key="cancelCertificate"
+                  onClick={() => onCancelCertificate(record)}
+                  style={{ color: '#ff0000' }}
+                  type="link"
+                >
+                  注销证书
+                </Button>
+                <Button
+                  key="downloadCertificate"
+                  onClick={() => onDownloadCertificate(record)}
+                  style={{ color: '#52c41a' }}
+                  type="link"
+                >
+                  下载证书
+                </Button>
+              </>
+            ) : (
+              <Button
+                key="applyCertificate"
+                onClick={() => onApplyCertificate(record)}
+                style={{ color: '#52c41a' }}
+                type="link"
+              >
+                申请证书
+              </Button>
+            )}
             <Popconfirm
               key="delete"
               onConfirm={async () => {
@@ -82,6 +117,7 @@ const UserManage: React.FC = () => {
       }
     }
   ]
+  // 请求用户列表
   const request = async (params: any) => {
     const { code, list, total }: any = await getUserList(params)
     return {
@@ -90,18 +126,43 @@ const UserManage: React.FC = () => {
       total: total || 0
     }
   }
+  // 新增用户
   const onAdd = () => {
     setVisible(true)
     setDrawerType('add')
   }
+  // 编辑用户
   const onEdit = (record: DataType) => {
     setRowValues(record)
     setVisible(true)
     setDrawerType('edit')
   }
-  const onDelete = (record: DataType) => {
-    console.log('删除用户', record)
+  // 申请证书
+  const onApplyCertificate = async (record: DataType) => {
+    const { code }: any = await applyCertificate(record.id as string)
+    if (code === 0) {
+      actionRef.current?.reload()
+      window.$message.success('申请证书成功')
+    }
   }
+  // 注销证书
+  const onCancelCertificate = async (record: DataType) => {
+    const { code }: any = await cancelCertificate(record.id as string)
+    if (code === 0) {
+      actionRef.current?.reload()
+      window.$message.success('注销证书成功')
+    }
+  }
+  // 下载证书
+  const onDownloadCertificate = async (record: DataType) => {
+    try {
+      await downloadCertificate(record.id as string)
+      window.$message.success('下载证书成功')
+    } catch (error) {
+      window.$message.error('下载证书失败')
+    }
+  }
+  // 关闭抽屉
   const onCloseHandler = (type?: 'add' | 'edit') => {
     setVisible(false)
     setRowValues(null)
