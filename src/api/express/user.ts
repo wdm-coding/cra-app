@@ -9,9 +9,8 @@ export function userAccountLogin(data: {
 
 // 用户证书登录
 export function userCertLogin() {
-  return httpService.post('/expressApi/user/certLogin')
+  return httpService.get('/expressApi/user/certLogin')
 }
-
 
 // 获取用户信息
 export function getExpressUserInfo() {
