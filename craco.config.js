@@ -1,5 +1,7 @@
 const path = require('path')
 const CracoLessPlugin = require('craco-less')
+const https = require('https')
+const fs = require('fs')
 module.exports = {
   // 开发环境配置
   devServer: {
@@ -34,7 +36,12 @@ module.exports = {
         changeOrigin: true,
         secure: false,
         logLevel: 'info',
-        pathRewrite: { '^/expressApi': '/api' }
+        pathRewrite: { '^/expressApi': '/api' },
+        agent: new https.Agent({
+          cert: fs.readFileSync('./userCert/zhangsan.crt'), // 客户端证书
+          key: fs.readFileSync('./userCert/zhangsan.key'), // 客户端私钥
+          ca: fs.readFileSync('./userCert/ca.crt')
+        })
       }
     },
     client: {

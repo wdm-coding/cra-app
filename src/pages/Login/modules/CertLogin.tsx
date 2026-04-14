@@ -1,18 +1,27 @@
 import { Button, Card, Typography } from 'antd'
 import { FileTextOutlined } from '@ant-design/icons'
-import { userCertLogin } from '@/api/express/user'
-
+import { useDispatch } from 'react-redux'
+import { userLogin } from '@/store/modules/userStore'
+import { useState } from 'react'
+import { useLocation, useNavigate } from 'react-router'
 const { Title, Text } = Typography
 const CertLogin: React.FC = () => {
+  const navigate = useNavigate()
+  const state = useLocation().state
+  const [loading, setLoading] = useState(false)
+  const dispatch = useDispatch<any>()
   const onCertLogin = async () => {
-    console.log('登录')
-    const { code }: any = await userCertLogin()
-    // if (code === 0) {
-    //   window.$message.success('登录成功')
-    // }
-    // else {
-    //   window.$message.error('登录失败')
-    // }
+    setLoading(true)
+    try {
+      const result: any = await dispatch(userLogin({ type: 'cert', loginParams: {} })).unwrap()
+      setLoading(false)
+      window.$message.success('登录成功')
+      result && navigate(state?.from || '/', { replace: true })
+    } catch (error) {
+      setLoading(false)
+      const { message } = error as any
+      throw new Error(message)
+    }
   }
   return (
     <div>
@@ -42,7 +51,14 @@ const CertLogin: React.FC = () => {
           <li>已吊销证书无法登录</li>
         </ul>
       </Card>
-      <Button block onClick={onCertLogin} size="large" style={{ marginTop: 12 }} type="primary">
+      <Button
+        block
+        loading={loading}
+        onClick={onCertLogin}
+        size="large"
+        style={{ marginTop: 12 }}
+        type="primary"
+      >
         证书登录
       </Button>
     </div>

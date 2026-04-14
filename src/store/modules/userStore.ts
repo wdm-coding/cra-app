@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import Storage from "@/utils/storage";
 import { fatchMenus } from "@/routers/routes";
-import { userAccountLogin, getExpressUserInfo } from "@/api/express/user";
+import { userAccountLogin, getExpressUserInfo, userCertLogin } from "@/api/express/user";
 const userSlice = createSlice({
     name: "user",
     initialState: {
@@ -102,7 +102,21 @@ const userLogin = createAsyncThunk('user/login', async (payload: LoginPayload, {
         }
     }
     if (payload.type === 'cert') {
-        throw new Error('cert登录方式');
+        const { code, data }: any = await userCertLogin()
+        if (code === 0) {
+            Storage.setItem('authToken', data);
+            // 获取用户信息
+            const userRes: any = await getExpressUserInfo()
+            if (userRes.code === 0) {
+                dispatch(userSlice.actions.setUserInfo(userRes.data)); // 执行同步action，保存用户信息
+                const res = await dispatch(getUserMenus()).unwrap() // 获取菜单数据
+                if (res) {
+                    return true;
+                }
+            }
+        } else {
+            throw new Error('登录失败');
+        }
     }
     throw new Error('登录方式不存在');
 })
