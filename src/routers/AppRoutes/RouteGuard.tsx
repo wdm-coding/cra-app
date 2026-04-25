@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { useMemo, useEffect, useRef } from 'react'
 import FallbackLoading from '@/components/FallbackLoading'
 // 路由白名单
-const whiteList = ['/', '/client', '/login', '/403', '/404', '/client/home']
+const whiteList = ['/', '/client', '/login', '/403', '/404', '/client/home', '/dnp/redirect']
 const NavigeteBack = () => {
   const navigate = useNavigate()
   useEffect(() => {
@@ -24,6 +24,7 @@ const RouteGuard = ({ children }: { children: React.ReactNode }) => {
     loginRef.current = currentLoginStatus
     // 1. 未登录且不在白名单
     if (!loginStatus && !whiteList.includes(pathname)) {
+      console.log('未登录且不在白名单', pathname)
       return {
         to: '/login',
         state: { ...state, from: pathname },

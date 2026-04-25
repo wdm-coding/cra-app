@@ -19,6 +19,10 @@ export const routes: RouteItem[] = [
     element: './Login'
   },
   {
+    path: '/dnp/redirect',
+    element: './DnpRedirect'
+  },
+  {
     path: '/client',
     element: '@/ClientLayout',
     children: [

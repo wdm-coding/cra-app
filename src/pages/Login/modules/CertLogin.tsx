@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import { userLogin } from '@/store/modules/userStore'
 import { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router'
+import { createDnpLogin } from 'dnp-client'
 const { Title, Text } = Typography
 const CertLogin: React.FC = () => {
   const navigate = useNavigate()
@@ -23,8 +24,45 @@ const CertLogin: React.FC = () => {
       throw new Error(message)
     }
   }
+
+  const dnpLogin = createDnpLogin({
+    options: {
+      nodeId: '291620100MA73UAR56E6200TZ8P8HP7X'
+    },
+    callbacks: {
+      onLoading: (loading) => {
+        console.log('加载中...', loading)
+        // navigate('/dnp/redirect?uuid=1545654755455')
+      },
+      onSuccess: (res) => {
+        console.log('登录成功')
+        // navigate('/dnp/redirect?uuid=1545654755455')
+      },
+      onError: (err) => {
+        console.error('err', err)
+      },
+      onMessage: (msg) => {
+        console.log('收到消息', msg)
+      }
+    }
+  })
+
+  const onDnpLogin = async () => {
+    dnpLogin.login()
+  }
+
   return (
     <div>
+      <Button
+        block
+        loading={loading}
+        onClick={onDnpLogin}
+        size="large"
+        style={{ marginTop: 12 }}
+        type="primary"
+      >
+        dnpLogin
+      </Button>
       <Title level={3}>证书登录</Title>
       <Text type="secondary">请使用客户端证书完成身份验证</Text>
       <Card style={{ borderRadius: 8, marginTop: 0 }}>

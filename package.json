@@ -27,6 +27,7 @@
     "classnames": "^2.5.1",
     "craco-less": "^3.0.1",
     "dayjs": "^1.11.20",
+    "dnp-client": "^0.1.4",
     "less": "^4.4.2",
     "less-loader": "^12.3.0",
     "react": "^19.2.0",
