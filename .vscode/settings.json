@@ -6,7 +6,9 @@
     "javascript",
     "javascriptreact",
     "typescript",
-    "typescriptreact"
+    "typescriptreact",
+    "react"
   ],
-  "editor.formatOnSave": false
+  "editor.formatOnSave": false,
+  "eslint.format.enable": true,
 }
