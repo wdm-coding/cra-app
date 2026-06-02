@@ -27,7 +27,7 @@ const CertLogin: React.FC = () => {
 
   const dnpLogin = createDnpLogin({
     options: {
-      nodeId: '291620100MA73UAR56E6200TZ8P8HP7X'
+      // nodeId: '291620100MA73UAR56E6200TZ8P8HP7X'
     },
     callbacks: {
       onLoading: (loading) => {
