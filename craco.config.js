@@ -42,7 +42,14 @@ module.exports = {
           key: fs.readFileSync('./userCert/zhangsan.key'), // 客户端私钥
           ca: fs.readFileSync('./userCert/ca.crt')
         })
-      }
+      },
+      '/fnodePortalApi': {
+        target: 'https://gansu-ndi.com/functionnode-portal-api',
+        changeOrigin: true,
+        secure: false,
+        logLevel: 'info',
+        pathRewrite: { '^/fnodePortalApi': '' },
+      },
     },
     client: {
       overlay: {

@@ -13,7 +13,7 @@ export interface RouteItem {
 export const routes: RouteItem[] = [
   {
     path: '/',
-    redirect: '/client',
+    redirect: '/fnodePortal',
   },
   {
     path: '/login',
@@ -25,7 +25,7 @@ export const routes: RouteItem[] = [
   },
   {
     path: '/client',
-    element: '@/ClientLayout',
+    element: '@/Layout/ClientLayout',
     children: [
       {
         path: 'home',
@@ -47,7 +47,7 @@ export const routes: RouteItem[] = [
   },
   {
     path: '/manager',
-    element: '@/ManagerLayout',
+    element: '@/Layout/ManagerLayout',
     children: [
       {
         path: 'dashboard',
@@ -75,6 +75,32 @@ export const routes: RouteItem[] = [
         name: 'NodeApi测试',
         element: './Manager/NodeDemo',
         icon: 'BarChartOutlined'
+      }
+    ]
+  },
+  {
+    path:'/fnodePortal',
+    element: '@/Layout/FnodePortalLayout',
+    children: [
+      {
+        path: 'home',
+        name: '首页',
+        element: './FnodePortal/Home'
+      },
+      {
+        path: 'businessNode',
+        name: '业务节点',
+        element: './FnodePortal/Business'
+      },
+      {
+        path: 'catalog',
+        name: '数据资源',
+        element: './FnodePortal/Catalog'
+      },
+      {
+        path: 'product',
+        name: '数据产品',
+        element: './FnodePortal/Product'
       }
     ]
   }

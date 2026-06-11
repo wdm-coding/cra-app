@@ -9,7 +9,7 @@ module.exports = {
     'react/jsx-curly-brace-presence': [2, 'never'], // 防止在JSX表达式中省略花括号
     'react/jsx-fragments': [2, 'syntax'], // 防止在JSX中使用不必要的片段
     'react/jsx-pascal-case': 2, // 防止在JSX中使用非PascalCase的组件名
-    'react/jsx-props-no-spreading': 2, // 防止在JSX中展开props
+    'react/jsx-props-no-spreading': 0, // 防止在JSX中展开props
     'react/jsx-sort-props': 2, // 防止在JSX中属性排序混乱
     'react/jsx-uses-vars': 2, // 防止在JSX中遗漏变量
     'react/jsx-wrap-multilines': 2, // 防止在JSX中省略多行元素的闭合标签

@@ -7,3 +7,8 @@ export const uploadApi = () => {
 export const getEnterpriseDetail = () => {
   return httpService.get<any>('/functionApi/functionnode-portal-api/api/v1/portal/enterprise/detail');
 };
+
+// 获取门户配置
+export const getPortalConfig = () => {
+  return httpService.get<any>('/fnodePortalApi/api/v1/portal/page/info');
+};

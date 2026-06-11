@@ -45,7 +45,7 @@ axiosInstance.interceptors.response.use(
     } else {
       const { code, msg } = data
       if (typeof code === 'number') {
-        if (code === 0) {
+        if (code === 0 || code === 200) {
           return data
         } else {
           window.$message.error(msg)
