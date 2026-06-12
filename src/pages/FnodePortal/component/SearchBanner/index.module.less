@@ -1,0 +1,94 @@
+.searchBanner{
+  width: 100%;
+  height: 35.74vh;
+  background-size: 100% 100%;
+  padding-top: 72px;
+  .title{
+    font-size: 2.5vw;
+    color: #000;
+    text-align: center;
+    font-family: 'SHS-M';
+    padding-top: 3vh;
+  }
+  .count{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.04vw;
+    color: #000000;
+    font-family: 'SHS-M';
+    padding-top: 2vh;
+    margin-bottom: 2.5vh;
+    .countNum{
+      display: flex;
+      align-items: center;
+      .countNumItem{
+        width: 2.1vw;
+        height: 4.9vh;
+        background: linear-gradient(180deg, rgba(193.00000369548798, 238.00000101327896, 255, 1), rgba(255, 255, 255, 1), rgba(109.00000110268593, 214.00000244379044, 255, 1), rgba(192.72713273763657, 237.51241117715836, 255, 1));
+        margin: 0 5px;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .countNumInnerItem{
+          width: calc(100% - 0.21vw);
+          height: calc(100% - 0.37vh);
+          background-color: #047ec5;
+          border-radius: 4px;
+          position: relative;
+          .countNumInnerItemValue{
+            font-size: 1.8vw;
+            color: #FFFFFF;
+            text-align: center;
+            font-family: 'SHS-M';
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            top: -2px;
+          }
+          .countNumInnerItemBottom{
+            position: absolute;
+            width: 100%;
+            height: 50%;
+            bottom: 0;
+            background-color: rgba(17, 141, 250, 0.5);
+            border-radius: 0 0 4px 4px;
+          }
+        }
+      }
+    }
+  }
+  .searchContainer{
+    width: 56.25vw;
+    height: 4.63vh;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    .searchInput{
+      min-width: none;
+      flex: 1;
+      height: 100%;
+      background: #FFFFFF;
+      border-radius: 6px 0px 0px 6px;
+      border: 1px solid #979797;
+      border-right: none;
+    }
+    .searchButton{
+      width: 5.94vw;
+      height: 100%;
+      background: linear-gradient( 90deg, #006BD3 0%, #00A4EB 100%);
+      border-radius: 0px 6px 6px 0px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.04vw;
+      cursor: pointer;
+    }
+  }
+}

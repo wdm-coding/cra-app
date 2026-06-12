@@ -22,7 +22,7 @@ const FnodePortalLayout = () => {
   return (
     <div className="w-full flex flex-col relative">
       <PortalHeader {...portalConfig} />
-      <div className="w-full min-h-[100vh]">
+      <div className="w-full min-h-[100vh] bg-[#F5F5F5]">
         <Outlet />
       </div>
       <PortalFooter />

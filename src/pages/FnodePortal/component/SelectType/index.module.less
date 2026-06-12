@@ -1,0 +1,54 @@
+.selectTypeContainer{
+  width: 71.88vw;
+  padding: 3.24vh 1.56vw;
+  margin: 3.7vh auto;
+  background-color: #FFFFFF;
+  border-radius: 2px;
+  display: flex;
+  .title{
+    height: 0.83vw;
+    display: flex;
+    align-items: center;
+    color: #000000;
+    font-size: 0.83vw;
+    font-family:'SHS-M';
+    flex-shrink: 0;
+    padding-top: 0.6vh;
+    .titleIcon{
+      width: 3px;
+      height: 1em;
+      background: #0078D3;
+      margin-right: 6px;
+      position: relative;
+      top: 1px;
+    }
+  }
+  .selectList{
+    min-width: none;
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    .selectItem{
+      height: 2.6vh;
+      background: #FCFCFC;
+      border-radius: 3px;
+      border: 1px solid #C5C5C5;
+      color: #666666;
+      font-size: 0.73vw;
+      font-family:'SHS-M';
+      padding: 0 1vw;
+      margin: 0 1.04vw 2vh 1.04vw;
+      cursor: pointer;
+    }
+    .selectItem:hover{
+      background: linear-gradient( 180deg, #00A4EB 0.71%, #006BD3 100%);
+      border-radius: 3px;
+      color: #FFFFFF; 
+    }
+    .selectItemActive{
+      background: linear-gradient( 180deg, #00A4EB 0.71%, #006BD3 100%);
+      border-radius: 3px;
+      color: #FFFFFF; 
+    }
+  }
+}
