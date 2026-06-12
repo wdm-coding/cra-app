@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from 'react-router';
 import styles from './index.module.less'
 import classnames from 'classnames'
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 type Props = {
   navMenus:any[];
   pageTitle:string;
@@ -23,9 +23,24 @@ const PortalHeader:React.FC<Props> = ({navMenus,pageTitle}) => {
     }
     navigate(`/fnodePortal${item.path}`);
   }
+  const [scrollY, setScrollY] = useState(0);
+  useEffect(() => {
+    // 定义滚动处理函数
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   return (
-    <div className="w-full h-[72px] bg-[rgba(255,255,255,0.7)] border-b border-[rgba(0,0,0,0.3)] flex-shrink-0 fixed top-0 left-0 pl-[30px] pr-[30px]">
-      <div className="w-full h-full flex items-center">
+    <div className={
+      classnames('w-full h-[72px] flex-shrink-0 fixed top-0 left-0 pl-[30px] pr-[30px] z-[1000]', styles.headerContainer,{
+        [styles.scrollHeader]: scrollY > 10
+      })
+    }>
+      <div className="w-full h-full flex items-center" style={{fontFamily:'SHS-M'}}>
         <img alt="logo" className="w-[50px] h-[50px] rounded-full mr-[10px]" src={require('@/assets/images/ai-avator.png')} />
         <div className="color-[#000000] text-[24px] font-bold mr-[80px]">{pageTitle}</div>
         <div className={styles.navMenus}>

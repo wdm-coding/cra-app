@@ -1,0 +1,86 @@
+.resource{
+  width: 100%;
+  background: url('~@/assets/images/portalImg/resource-bg.png') no-repeat center center;
+  background-size: 100% 100%;
+  padding: 7.41vh 0;
+  .resourceContent{
+    width: 71.88vw;
+    height: 37.04vh;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    .resourceItem{
+      width: 20.52vw;
+      height: 31.48vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+      box-shadow: 0px 2px 8px 0px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      border: 1px solid #FFFFFF;
+      transition: height .2s ease-in-out,background .2s ease-in-out,box-shadow .2s ease-in-out,border-color .2s ease-in-out;
+      position: relative;
+      .resourceItemIcon{
+        position: absolute;
+        width: 9.11vw;
+        height: 17.22vh;
+        object-fit: cover;
+        bottom:0.93vh;
+        right:0.52vw;
+      }
+      .resourceItemText{
+        position: absolute;
+        top:0.93vh;
+        left:1.56vw;
+        .resourceItemNum{
+          font-size: 3.54vw;
+          color: #006BD3;
+        }
+        .resourceItemTitle{
+          font-size: 1.35vw;
+          color: #333333;
+          font-family: 'SHS-M';
+        }
+      }
+      .resourceItemDetail{
+        display: none;
+      }
+    }
+    .resourceItemActive{
+      width: 28.75vw;
+      height: 37.04vh;
+      background: url('~@/assets/images/portalImg/resource-active-bg.png') no-repeat center center;
+      background-size: 100% 100%;
+      box-shadow: 0px 2px 8px 0px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      border: 1px solid #FFFFFF;
+      transition: height .2s ease-in-out,background .2s ease-in-out,box-shadow .2s ease-in-out,border-color .2s ease-in-out,transform .2s ease-in-out;
+      .resourceItemIcon{
+        top:0.93vh;
+        right:1.04vw;
+      }
+      .resourceItemText{
+        .resourceItemNum{
+          color: #fff;
+        }
+        .resourceItemTitle{
+          color: #fff;
+        }
+      }
+      .resourceItemDetail{
+        display: inline-block;
+        position: absolute;
+        bottom: 1.85vh;
+        left: 1.04vw;
+        width: 26.67vw;
+        height: 9.06vw;
+        backdrop-filter: blur(10px);
+        background-color: rgba(255,255,255,0.4);
+        border-radius: 12px;
+      }
+    }
+  }
+}

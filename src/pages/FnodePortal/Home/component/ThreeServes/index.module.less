@@ -1,0 +1,72 @@
+.threeServesContainer {
+  width: 100%;
+  height: 70.56vh;
+  background: url('~@/assets/images/portalImg/threeServer-bg.png') no-repeat center center;
+  background-size: 100% 100%;
+  padding: 7.41vh 0;
+  .threeServesContent{
+    width: 71.88vw;
+    height: 43.52vh;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .threeServesItem{
+      position: relative;
+        &:hover{
+          .threeServesItemContent{
+            width: 23.23vw;
+            height: 35.93vh;
+            background: url('~@/assets/images/portalImg/threeServer-active-bg.png') no-repeat center center;
+            background-size: 100% 100%;
+            border: 1px solid #00A4EB;
+            transition: background .2s ease-in-out,border-color .2s ease-in-out;
+          }
+          .threeServesItemTitle{
+            /* 1. 设置从上到下的渐变背景 */
+            background: linear-gradient(to bottom, #00A4EB, #006BD3);
+            /* 2. 将背景裁剪到文字轮廓内（兼容 Webkit 内核浏览器） */
+            -webkit-background-clip: text;
+            background-clip: text;
+            /* 3. 将文字填充色设为透明，以露出底部的渐变背景 */
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+          }
+        }
+      .threeServesItemIcon{
+        position: absolute;
+        width: 10.94vw;
+        height: 10.94vw;
+        top: -4.27vw;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .threeServesItemContent{
+        width: 23.23vw;
+        height: 35.93vh;
+        background: #fff;
+        box-shadow: 0px 2px 8px 0px rgba(0,0,0,0.1);
+        border-radius: 12px;
+        border: 1px solid #FFFFFF;
+        padding: 12vh 1.56vw 0 1.56vw;
+        .threeServesItemTitle{
+          color: #333;
+          font-size: 1.35vw;
+          font-family: 'SHS-M';
+        }
+        .threeServesItemLine{
+          width: 2.4vw;
+          height: 4px;
+          background: #006BD3;
+          border-radius: 2.5px;
+          margin-top: 2.78vh;
+        }
+        .threeServesItemDesc{
+          color: #666;
+          font-size: 0.73vw;
+          margin-top: 2.78vh;
+        }
+      }
+    }
+  }
+}
