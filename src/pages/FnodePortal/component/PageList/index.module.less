@@ -1,0 +1,64 @@
+.pageListContainer {
+  width: 71.88vw;
+  margin: 2vh auto;
+  .pageListTop {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2vh;
+    .pageListTotal {
+      display: flex;
+      align-items: center;
+      height: 1.15vw;
+      font-size: 0.8vw;
+      color: #666666;
+    }
+    .sort{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .sortItem{
+        margin: 0 0.8vw;
+        cursor: pointer;
+        font-size: 0.73vw;
+      }
+      .sortItemActive{
+        margin: 0 0.8vw;
+        cursor: pointer;
+        color: #006BD3;
+        font-size: 0.73vw;
+      }
+    }
+  }
+  .pageListEmpty {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 27.22vh;
+    font-size: 1.2vw;
+    color: #666666;
+  }
+  .pageListContent {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr)); /* 3列等宽，不能撑开父容器 */
+    gap: 20px; /* 卡片间距 */
+    margin: 1vh auto 4vh auto; /* 居中 */
+  }
+  .pageListFooter {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    :global {
+      .ant-pagination-item-active {
+        background: #006bd3;
+        a {
+          color: #fff;
+        }
+      }
+    }
+  }
+}

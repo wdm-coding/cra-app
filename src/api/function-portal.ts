@@ -12,3 +12,28 @@ export const getEnterpriseDetail = () => {
 export const getPortalConfig = () => {
   return httpService.get<any>('/fnodePortalApi/api/v1/portal/page/info');
 };
+
+// 获取业务节点-业务功能类型
+export const getBusinessFunctionType = () => {
+  return httpService.get<any>('/fnodePortalApi/api/v1/portal/dictionary/serviceNodeSearchDictionaryList');
+};
+// 获取业务节点-列表
+export const getBusinessNodeList = (data: any) => {
+  return httpService.post<any>('/fnodePortalApi/api/v1/portal/serviceNode/search/page', data);
+};
+// 获取数据资源-行业分类
+export const getIndustryCategory = () => {
+  return httpService.get<any>('/fnodePortalApi/api/v1/portal/dictionary/searchDictionaryList');
+};
+// 获取数据资源-列表
+export const getResourceList = (data: any) => {
+  return httpService.post<any>('/fnodePortalApi/api/v1/portal/catalog/page', data);
+};
+// 获取数据产品-产品类型
+export const getProductType = () => {
+  return httpService.get<any>('/fnodePortalApi/api/v1/portal/dictionary/productSearchDictionaryList');
+};
+// 获取数据产品-列表
+export const getProductList = () => {
+  return httpService.get<any>('/fnodePortalApi/api/v1/portal/productSearch');
+};
