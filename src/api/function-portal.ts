@@ -34,6 +34,6 @@ export const getProductType = () => {
   return httpService.get<any>('/fnodePortalApi/api/v1/portal/dictionary/productSearchDictionaryList');
 };
 // 获取数据产品-列表
-export const getProductList = () => {
-  return httpService.get<any>('/fnodePortalApi/api/v1/portal/productSearch');
+export const getProductList = (data: any) => {
+  return httpService.post<any>('/fnodePortalApi/api/v1/portal/product/getProductsByPage', data);
 };

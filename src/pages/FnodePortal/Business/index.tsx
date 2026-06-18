@@ -11,6 +11,7 @@ const FnodePortalBusiness = () => {
   const [dictRefList, setDictRefList] = useState<any[]>([])
   const [current, setCurrent] = useState<number>(1)
   const [total, setTotal] = useState<number>(0)
+  const [totalCount, setTotalCount] = useState<number>(0)
   const [pageSize, setPageSize] = useState<number>(10)
   const [tableData, setTableData] = useState<any[]>([])
   const [loading, setLoading] = useState<boolean>(false)
@@ -36,6 +37,18 @@ const FnodePortalBusiness = () => {
     }
     setLoading(false)
   }, [dictRefList, current, pageSize, keyword])
+
+  const fetchTotalCount = useCallback(async () => {
+    const { code, data } = await getBusinessNodeList({ pageNum: 1, pageSize: 1 })
+    if (code === 200) {
+      setTotalCount(data?.totalRows || 0)
+    }
+  }, [])
+
+  useEffect(() => {
+    fetchTotalCount()
+  }, [fetchTotalCount])
+
   useEffect(() => {
     getList()
   }, [current, pageSize, getList])
@@ -43,7 +56,7 @@ const FnodePortalBusiness = () => {
     <div>
       <SearchBanner
         bannerBg={bannerBg}
-        countNum={total}
+        countNum={totalCount}
         onClear={() => {
           setKeyword({ value: '' })
         }}

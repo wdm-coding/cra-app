@@ -28,7 +28,7 @@ const Catalog = () => {
       params.dictRefList = dictRefList
     }
     if (keyword.value) {
-      params.keyword = keyword.value
+      params.catalogTitle = keyword.value
     }
     setLoading(true)
     const { code, data } = await getResourceList(params)
@@ -65,7 +65,7 @@ const Catalog = () => {
           setKeyword({ value })
           setCurrent(1)
         }}
-        title="业务节点"
+        title="数据资源"
       />
       <SelectType
         apiFunction={getIndustryCategory}
@@ -92,7 +92,7 @@ const Catalog = () => {
           setCurrent(page)
           setPageSize(pageSize)
         }}
-        title="业务节点"
+        title="数据资源"
         total={total}
       >
         {(item) => (
