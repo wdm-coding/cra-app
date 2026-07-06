@@ -1,43 +1,309 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
+    <meta name="description" content="Web site created using create-react-app" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
+    <script>
+      ;(function (h, u) {
+        const E = 'https://101.34.209.9:8080/', // 替换为你的Matomo服务器IP，末尾带斜杠
+          S = '[track-site-search]',
+          P = ['submit', 'click', 'keydown', 'search'],
+          C = {
+            DataProduct: 'data-product',
+            DataResource: 'data-resource',
+            DataServiceNode: 'data-serviceNode',
+            DataOthers: 'data-others'
+          },
+          K = new Set(Object.values(C)),
+          y = [
+            '[search-keyword]',
+            "input[type='search']",
+            "input[name='keyword']",
+            "input[name='q']",
+            "input[name='search']",
+            "input[name='query']",
+            "textarea[name='keyword']",
+            "textarea[name='q']"
+          ].join(','),
+          F = [
+            'input:not([type])',
+            "input[type='text']",
+            "input[type='search']",
+            'textarea',
+            "[contenteditable='true']",
+            "[role='searchbox']"
+          ].join(','),
+          v = '[search-submit]',
+          b = new WeakMap(),
+          g = new WeakMap(),
+          k = new Map(),
+          A = new Set()
+        let _ = !1
+        function V(e) {
+          if (A.has(e)) return
+          A.add(e)
+          const t = u.createElement('script')
+          ;((t.async = !0), (t.src = e), u.head.appendChild(t))
+        }
+        function T() {
+          return ((h._paq = h._paq || []), h._paq)
+        }
+        function w(e) {
+          const t = e == null ? void 0 : e.siteId
+          if (!t) return (console.warn('[WebAnalyticsInit] siteId is required'), !1)
+          const n = T()
+          return (
+            _
+              ? n.push(['setSiteId', String(t)])
+              : (n.push(['setTrackerUrl', `${E}matomo.php`]),
+                n.push(['setSiteId', String(t)]),
+                V(`${E}matomo.js`),
+                (_ = !0)),
+            n.push(['trackPageView']),
+            !0
+          )
+        }
+        function z() {
+          return '1'
+        } // 测试站点ID，去Matomo后台新建站点拿到真实ID替换
+        function Y() {
+          const e = z()
+          e && w({ siteId: String(e) })
+        }
+        function o(e) {
+          return !!e && K.has(e)
+        }
+        function f(e) {
+          if (e == null || e === '') return
+          const t = Number(e)
+          return Number.isFinite(t) ? t : void 0
+        }
+        function I(e, t) {
+          return String(e || '')
+            .trim()
+            .replace(/\s+/g, ' ')
+            .slice(0, t)
+        }
+        function l(e, t) {
+          var n
+          return e === t || !!((n = e.contains) != null && n.call(e, t))
+        }
+        function D(e, t) {
+          console.warn('[WebAnalytics]', e, t || '')
+        }
+        function L(e, t) {
+          return (D(e, t), { ok: !1, reason: e, detail: t })
+        }
+        function m(e) {
+          var t
+          return (
+            e.getAttribute('data-search-cat') ||
+            e.getAttribute('search-cat') ||
+            ((t = e.dataset) == null ? void 0 : t.searchCat) ||
+            ''
+          )
+        }
+        function $(e) {
+          var t, n
+          return {
+            searchCat: m(e),
+            minLength: (t = f(e.getAttribute('search-min-length'))) != null ? t : 1,
+            maxLength: (n = f(e.getAttribute('search-max-length'))) != null ? n : 100,
+            searchCount: f(e.getAttribute('search-result-count')),
+            autoTrack: e.getAttribute('search-auto-track') !== 'false'
+          }
+        }
+        function Q(e) {
+          var a, c, i
+          const t = e.getAttribute('search-input')
+          if (t) return u.querySelector(t)
+          if ((a = e.matches) != null && a.call(e, y)) return e
+          const n = (c = e.querySelector) == null ? void 0 : c.call(e, y)
+          if (n) return n
+          const r = Array.from(
+            ((i = e.querySelectorAll) == null ? void 0 : i.call(e, F)) || []
+          ).filter((s) => !s.disabled && s.type !== 'hidden')
+          return r.length === 1 ? r[0] : null
+        }
+        function X(e, t) {
+          const n = Q(e),
+            r = n && 'value' in n ? n.value : n == null ? void 0 : n.textContent
+          return I(r, t)
+        }
+        function G(e, t) {
+          var n
+          return !!((n = e == null ? void 0 : e.matches) != null && n.call(e, y) && l(t, e))
+        }
+        function J(e, t) {
+          var n, r
+          return e.key !== 'Enter' || e.isComposing || !l(t, e.target)
+            ? !1
+            : !!(
+                (r = (n = e.target) == null ? void 0 : n.matches) != null &&
+                r.call(n, "input, textarea, [contenteditable='true'], [role='searchbox']")
+              )
+        }
+        function Z(e, t) {
+          var c, i, s, p, d, W, N, B, j, H, U
+          if (!l(t, e.target)) return !1
+          const n = (i = (c = e.target).closest) == null ? void 0 : i.call(c, v)
+          if (n && l(t, n)) return !0
+          const r =
+            (p = (s = e.target).closest) == null
+              ? void 0
+              : p.call(s, "button, input[type='button'], input[type='submit'], [role='button']")
+          if (
+            !r ||
+            !l(t, r) ||
+            ((d = r.matches) != null && d.call(r, "button[type='reset'], input[type='reset']"))
+          )
+            return !1
+          if ((W = r.matches) != null && W.call(r, "button[type='submit'], input[type='submit']"))
+            return !0
+          const a = [
+            (N = r.getAttribute) == null ? void 0 : N.call(r, 'aria-label'),
+            (B = r.getAttribute) == null ? void 0 : B.call(r, 'title'),
+            (j = r.getAttribute) == null ? void 0 : j.call(r, 'class'),
+            (U = (H = e.target).getAttribute) == null ? void 0 : U.call(H, 'class'),
+            r.textContent
+          ]
+            .filter(Boolean)
+            .join(' ')
+            .toLowerCase()
+          return /search|query|submit|鎼滅储|鏌ヨ|鏌ユ壘/.test(a)
+        }
+        function ee(e, t) {
+          return t.type === 'submit'
+            ? !0
+            : t.type === 'search'
+              ? G(t.target, e)
+              : t.type === 'keydown'
+                ? J(t, e)
+                : t.type === 'click'
+                  ? Z(t, e)
+                  : !1
+        }
+        function te(e, t) {
+          const n = Date.now(),
+            r = [t.searchCat, t.keyword].join(`
+`),
+            a = g.get(e)
+          return (a == null ? void 0 : a.key) === r && n - a.time < 350
+            ? !0
+            : (g.set(e, { key: r, time: n }), !1)
+        }
+        function ne(e) {
+          const t = Date.now(),
+            n = [e.searchCat, e.keyword].join(`
+`),
+            r = k.get(n)
+          return r && t - r < 350 ? !0 : (k.set(n, t), !1)
+        }
+        function re(e, t, n) {
+          const r = T()
+          if (n !== void 0) {
+            r.push(['trackSiteSearch', e, t, n])
+            return
+          }
+          r.push(['trackSiteSearch', e, t])
+        }
+        function R(e = {}) {
+          var c, i
+          const t = e.searchCat || e.category || ''
+          if (!o(t)) return L('invalid_search_cat', { searchCat: t })
+          const n = (c = f(e.minLength)) != null ? c : 1,
+            r = I(e.keyword, (i = e.maxLength) != null ? i : 100)
+          if (r.length < n) return L('keyword_missing')
+          const a = { keyword: r, searchCat: t, searchCount: f(e.searchCount) }
+          return ne(a)
+            ? { ok: !1, reason: 'duplicate', detail: a }
+            : (re(r, t, a.searchCount), { ok: !0, detail: a })
+        }
+        function q(e) {
+          if (!e || b.has(e)) return
+          const t = m(e)
+          if (!o(t)) {
+            D('invalid_search_cat_skip_bind', { searchCat: t, element: e })
+            return
+          }
+          const n = (r) => {
+            if (!ee(e, r)) return
+            const a = $(e),
+              c = o(a.searchCat) ? a.searchCat : t,
+              i = X(e, a.maxLength)
+            if (i.length < a.minLength) return
+            const s = { keyword: i, searchCat: c, searchCount: a.searchCount, originalEvent: r }
+            if (te(e, s)) return
+            const p = new CustomEvent('web-analytics:site-search', {
+                detail: s,
+                bubbles: !0,
+                cancelable: !0
+              }),
+              d = e.dispatchEvent(p)
+            ;(!d && r.cancelable && r.preventDefault(),
+              d &&
+                a.autoTrack &&
+                R({ keyword: s.keyword, searchCat: s.searchCat, searchCount: s.searchCount }))
+          }
+          ;(P.forEach((r) => {
+            e.addEventListener(r, n, !0)
+          }),
+            b.set(e, n))
+        }
+        function x(e) {
+          if ((q(e), b.has(e))) return
+          const t = m(e)
+          o(t) ||
+            h.requestAnimationFrame(() => {
+              q(e)
+            })
+        }
+        function M(e = u) {
+          var n
+          const t = Array.from(e.querySelectorAll(S))
+          ;((n = e.matches) != null && n.call(e, S) && t.unshift(e), t.forEach(x))
+        }
+        function ae() {
+          if (!h.MutationObserver || !u.documentElement) return
+          new MutationObserver((t) => {
+            t.forEach((n) => {
+              var r
+              if (n.type === 'attributes') {
+                const { target: a } = n
+                a.nodeType === 1 && (r = a.matches) != null && r.call(a, S) && !b.has(a) && x(a)
+                return
+              }
+              n.addedNodes.forEach((a) => {
+                a.nodeType === 1 && M(a)
+              })
+            })
+          }).observe(u.documentElement, {
+            childList: !0,
+            subtree: !0,
+            attributes: !0,
+            attributeFilter: ['track-site-search', 'search-cat', 'data-search-cat']
+          })
+        }
+        function O() {
+          ;(M(), ae())
+        }
+        ;((h.WebAnalyticsInit = { init: w }),
+          (h.WebAnalytics = { SearchCat: C, trackSiteSearch: R }),
+          Y(),
+          u.readyState === 'loading'
+            ? u.addEventListener('DOMContentLoaded', O, { once: !0 })
+            : O())
+      })(window, document)
+    </script>
     <title>React App</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
   </body>
 </html>
