@@ -9,36 +9,16 @@ const HomeSwiper:React.FC<{onScrollDown:()=>void}> = ({onScrollDown}) => {
   const mediaItems:any[] = [
     {
       id: 0,
-      type: 'image',
+      type: 'img',
       src: require('@/assets/images/portalImg/home-banner1.png'),
       alt: '示例图片 1'
     },
-    {
-      id: 1,
-      type: 'image',
-      src: require('@/assets/images/banner01.png'),
-      alt: '示例图片 1'
+    { 
+      id: 2,
+      type: 'video',
+      src: require('@/assets/images/portalImg/0.mp4'),
+      alt: '示例视频'
     },
-    // { 
-    //   id: 2,
-    //   type: 'video',
-    //   src: 'https://www.w3schools.com/html/mov_bbb.mp4',
-    //   poster: 'https://via.placeholder.com/800x400/28a745/ffffff?text=Video+Poster',
-    //   alt: '示例视频'
-    // },
-    // { 
-    //   id: 3,
-    //   type: 'image',
-    //   src: require('@/assets/images/login-banner.png'),
-    //   alt: '示例图片 2'
-    // },
-    // {
-    //   id: 4,
-    //   type: 'video',
-    //   src: 'https://www.w3schools.com/html/mov_bbb.mp4',
-    //   poster: 'https://via.placeholder.com/800x400/28a745/ffffff?text=Video+Poster',
-    //   alt: '示例视频'
-    // }
   ]
   const onChange = useCallback((currentSlide: number) => {
     if(activeVideo) {
@@ -68,12 +48,12 @@ const HomeSwiper:React.FC<{onScrollDown:()=>void}> = ({onScrollDown}) => {
       </div>
       <Carousel afterChange={onChange} ref={carouselRef} style={{ width: '100%', height: '100%' }}>
         {mediaItems.map((item, index) => (
-          <div className="w-full h-[100vh]" key={item.id}>
-            {item.type === 'image' ? (
+          <div key={item.id} style={{ width: '100%', height: '100vh' }}>
+            {item.type === 'img' ? (
               <img
                 alt={item.alt}
                 src={item.src}
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                style={{ width: '100%', height: '100vh', objectFit: 'cover' }}
               />
             ) : (
               <video
@@ -89,7 +69,7 @@ const HomeSwiper:React.FC<{onScrollDown:()=>void}> = ({onScrollDown}) => {
                 }}
                 poster={item?.poster || ''}
                 src={item.src}
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                style={{ width: '100%', height: '100vh', objectFit: 'cover' }}
               />
             )}
           </div>
