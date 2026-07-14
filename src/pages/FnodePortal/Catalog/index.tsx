@@ -7,6 +7,7 @@ import { useCallback, useEffect, useState } from 'react'
 import styles from './index.module.less'
 import { getIndustryCategory, getResourceList } from '@/api/function-portal'
 import { EyeOutlined, RightOutlined } from '@ant-design/icons'
+import { trackSearchHandler } from '@/utils/matomo'
 
 const Catalog = () => {
   const [dictRefList, setDictRefList] = useState<any[]>([])
@@ -33,6 +34,7 @@ const Catalog = () => {
     setLoading(true)
     const { code, data } = await getResourceList(params)
     if (code === 200) {
+      trackSearchHandler(params, 'data-resource', data?.totalRows || 0)
       setTableData(data?.result || [])
       setTotal(data?.totalRows || 0)
     }

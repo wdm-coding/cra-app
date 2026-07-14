@@ -7,6 +7,7 @@ import { useCallback, useEffect, useState } from 'react'
 import styles from './index.module.less'
 import { getProductType, getProductList } from '@/api/function-portal'
 import { EyeOutlined, RightOutlined } from '@ant-design/icons'
+import { trackSearchHandler } from '@/utils/matomo'
 const Product = () => {
   const [dictRefList, setDictRefList] = useState<any[]>([])
   const [current, setCurrent] = useState<number>(1)
@@ -37,6 +38,7 @@ const Product = () => {
     setLoading(true)
     const { code, data } = await getProductList(params)
     if (code === 200) {
+      trackSearchHandler(params, 'data-product', data?.totalRows || 0)
       setTableData(data?.result || [])
       setTotal(data?.totalRows || 0)
     }

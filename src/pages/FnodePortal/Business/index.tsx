@@ -7,6 +7,8 @@ import { useCallback, useEffect, useState } from 'react'
 import styles from './index.module.less'
 import { getBusinessFunctionType, getBusinessNodeList } from '@/api/function-portal'
 import { EyeOutlined, RightOutlined } from '@ant-design/icons'
+import { trackSearchHandler } from '@/utils/matomo'
+
 const FnodePortalBusiness = () => {
   const [dictRefList, setDictRefList] = useState<any[]>([])
   const [current, setCurrent] = useState<number>(1)
@@ -32,6 +34,7 @@ const FnodePortalBusiness = () => {
     setLoading(true)
     const { code, data } = await getBusinessNodeList(params)
     if (code === 200) {
+      trackSearchHandler(params, 'data-serviceNode', data?.totalRows || 0)
       setTableData(data?.result || [])
       setTotal(data?.totalRows || 0)
     }
