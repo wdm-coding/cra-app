@@ -37,3 +37,12 @@ export const getProductType = () => {
 export const getProductList = (data: any) => {
   return httpService.post<any>('/fnodePortalApi/api/v1/portal/product/getProductsByPage', data);
 };
+
+// 上传接口
+export const uploadFile = (data: any) => {
+  return httpService.post<any>('/fnodePortalApi/api/v1/portal/enterprise/upload', data, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  });
+}

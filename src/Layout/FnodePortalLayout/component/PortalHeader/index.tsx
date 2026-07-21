@@ -13,10 +13,6 @@ const PortalHeader:React.FC<Props> = ({navMenus,pageTitle}) => {
     return pathname.indexOf(key) > -1;
   }, [pathname])
   const navItemClick = (item:any) => {
-    if(item.key === 'personal'){
-      alert('个人中心');
-      return;
-    }
     if(item.key === 'backstage'){
       alert('功能节点后台');
       return;

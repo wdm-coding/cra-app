@@ -18,30 +18,13 @@ const FnodePortalHome = () => {
     }
   }
   return (
-    <div className="w-full pt-[72px]">
-      <div track-site-search="true" data-search-cat="data-product" search-input="#searchBox1">
-        <input type="text" placeholder="请输入关键字1" />
-      </div>
-      <div track-site-search="true" data-search-cat="data-product" search-input="#searchBox2">
-        <input type="text" placeholder="请输入关键字2" />
-      </div>
-      <button type="button">查询</button>
-      <div
-        onClick={() =>
-          (window as any)?.WebAnalytics?.trackSiteSearch({
-            keyword: 'test',
-            searchCat: 'data-product'
-          })
-        }
-      >
-        click
-      </div>
-      {/* <HomeSwiper onScrollDown={handleScrollDown} />
+    <div className="w-full">
+      <HomeSwiper onScrollDown={handleScrollDown} />
       <div className="w-full" ref={contentRef}>
         <ThreeServes />
         <Resource />
         <AbilityCenter />
-      </div> */}
+      </div>
     </div>
   )
 }

@@ -93,6 +93,11 @@ export const routes: RouteItem[] = [
         element: './FnodePortal/Business'
       },
       {
+        path: 'functionNode',
+        name: '功能节点',
+        element: './FnodePortal/FunctionNode'
+      },
+      {
         path: 'catalog',
         name: '数据资源',
         element: './FnodePortal/Catalog'
@@ -101,6 +106,11 @@ export const routes: RouteItem[] = [
         path: 'product',
         name: '数据产品',
         element: './FnodePortal/Product'
+      },
+      {
+        path: 'personal',
+        name: '我的中心',
+        element: './FnodePortal/UserCenter'
       }
     ]
   }
