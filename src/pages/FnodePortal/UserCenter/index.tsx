@@ -1,97 +1,55 @@
 import styles from './index.module.less'
-import { Button, Form, Upload } from 'antd'
+import { Button, Form, FormInstance, Input, Upload } from 'antd'
 import UploadPicture from './components/UploadPicture'
-import { PlusOutlined, UploadOutlined } from '@ant-design/icons'
+import { UploadOutlined } from '@ant-design/icons'
+import { useEffect, useRef } from 'react'
+import { ProForm, ProFormText } from '@ant-design/pro-components'
 const UserCenter = () => {
-  // 站点配置
-  const siteConfig = {
-    tabTitle: '国家数据基础设施（甘肃）区域功能节点',
-    favicon: '/xxx/favicon.ico',
-    pageTitle: '国家数据基础设施（甘肃）区域功能节点',
-    portalLogo: '/xxx/xxx.png',
-    registrationInfo: '备案信息',
-    homeBanner: [
-      {
-        id: 1,
-        path: '/xxx/xxx.png',
-        type: 'img'
-      },
-      {
-        id: 2,
-        path: '/xxx/xxx.mp4',
-        type: 'video'
-      }
-    ]
-  }
-  // 资源概览
-  const resourceList = [
-    {
-      id: 1,
-      title: '已注册用户量',
-      num: 665,
-      detailTitle: '最新注册企业',
-      detail: [
-        {
-          id: 11,
-          name: '长沙万为机器人有限公司'
-        },
-        {
-          id: 12,
-          name: '新星智凯科技技术有限公司'
-        }
-      ]
-    },
-    {
-      id: 2,
-      title: '已注册业务节点',
-      num: 8,
-      detailTitle: '已接入平台',
-      detail: [
-        {
-          id: 21,
-          name: '甘肃省公共数据授权运营平台'
-        },
-        {
-          id: 22,
-          name: '甘肃省公共数据资源目录平台'
-        }
-      ]
-    },
-    {
-      id: 3,
-      title: '已登记数据量',
-      num: 113384,
-      detailTitle: '登记数据量',
-      detail: [
-        {
-          id: 31,
-          name: '数据资源',
-          value: 113384
-        },
-        {
-          id: 32,
-          name: '数据产品',
-          value: 113384
-        }
-      ]
-    }
-  ]
+  // //  1.保存菜单权限分配接口
+  // // 入参
+  // const params = {
+  //   type:'imp', // 实施机构菜单imp，运营机构菜单opt
+  //   userIds:'1,2,3,4', // 用户id 逗号分隔的字符串
+  // }
+
+  // // 2. 获取菜单权限分配详情
+  // // 出参
+  // const data = {
+  //   impUserIds:[], // 实施机构菜单分配的用户id数组
+  //   optUserIds:[], // 运营机构菜单分配的用户id数组
+  // }
+
+  // // 3. 登录用户的个人信息返回菜单权限字段
+  // // 出参
+  // const userInfo = {
+  //   menuShow:['imp','opt'],// ['imp'] 只有实施机构菜单权限， ['opt'] 只有运营机构菜单权限， ['imp','opt'] 两个都有
+  // }
+  const formRef = useRef<FormInstance>(null)
   const onFinish = (values: any) => {
     console.log('Received values of form: ', values)
   }
+  useEffect(() => {
+    // formRef.current?.setFieldsValue({
+    //   uploadImg: []
+    // })
+  }, [])
   return (
     <div className={styles.userCenterWrapper}>
       <div className={styles.userCenterContent}>
-        <Form
+        {/* <Form
           labelCol={{ span: 4 }}
           layout="horizontal"
           onFinish={onFinish}
+          ref={formRef}
           wrapperCol={{ span: 14 }}
         >
-          <Form.Item label="上传图片" name="uploadImg">
+          <Form.Item htmlFor={undefined} label="姓名" name="name">
+            <Input />
+          </Form.Item>
+          <Form.Item initialValue={[]} label="上传图片" name="uploadImg">
             <UploadPicture />
           </Form.Item>
-          <Form.Item label="上传文件" name="uploadFile">
+          <Form.Item htmlFor={undefined} label="上传文件" name="uploadFile">
             <Upload action="/upload.do" name="uploadFile">
               <Button icon={<UploadOutlined />}>Click to upload</Button>
             </Upload>
@@ -101,7 +59,30 @@ const UserCenter = () => {
               Submit
             </Button>
           </Form.Item>
-        </Form>
+        </Form> */}
+        <ProForm>
+          <ProFormText
+            dependencies={[['contract', 'name']]}
+            label="签约客户名称"
+            name="name"
+            placeholder="请输入客户名称"
+            required
+            rules={[{ required: true, message: '此项为必填项' }]}
+            tooltip="最长 24 个字符"
+            width="md"
+          />
+          <ProFormText
+            dependencies={[['contract', 'name']]}
+            htmlFor={null}
+            label="签约客户名称"
+            name="name1"
+            placeholder="请输入客户名称"
+            required
+            rules={[{ required: true, message: '此项为必填项' }]}
+            tooltip="最长 24 个字符"
+            width="md"
+          />
+        </ProForm>
       </div>
     </div>
   )
