@@ -1,82 +1,175 @@
 import styles from './index.module.less'
-import { Button, Form, FormInstance, Input, Upload } from 'antd'
-import UploadPicture from './components/UploadPicture'
-import { UploadOutlined } from '@ant-design/icons'
-import { useEffect, useRef } from 'react'
-import { ProForm, ProFormText } from '@ant-design/pro-components'
+import { ProForm, ProFormText, ProFormTreeSelect } from '@ant-design/pro-components'
+import industryList from './data'
+import { useEffect, useMemo, useRef, useState } from 'react'
+// 转换树结构，添加key、value、title、selectable、isLeaf、disabled属性
+const transformTree = (tree: any[]) => {
+  return tree.map((item: any) => {
+    if (item.children) {
+      item.children = transformTree(item.children)
+    }
+    return {
+      ...item,
+      key: item.industryId,
+      value: item.industryId,
+      title: item.name,
+      selectable: !item.children || item.children.length === 0,
+      isLeaf: !item.children || item.children.length === 0,
+      disabled: false
+    }
+  })
+}
+// 将所有数据 存储在map中，方便后续使用
+const industryMap = new Map()
+const setIndustryMap = (industryList: any[]) => {
+  industryList.forEach((item) => {
+    const ind: any = {
+      name: item.name,
+      industryId: item.industryId,
+      levelType: item.levelType
+    }
+    if (item.parentId) {
+      ind.parentId = item.parentId
+    }
+    industryMap.set(item.industryId, ind)
+    if (item.children && item.children.length > 0) {
+      setIndustryMap(item.children)
+    }
+  })
+}
+setIndustryMap(industryList)
+// 递归设置disabled属性
+const setDisabled = (list: any[], bool: boolean): any[] => {
+  return list.map((item: any) => ({
+    ...item,
+    disabled: bool,
+    children: (item.children && item.children.length > 0) ? setDisabled(item.children, bool) : []
+  }))
+}
+// 递归查找展开的key
+const findExpandedKeys = (keys:any[],industryMap: Map<string, any>) => {
+  const result:any[] = []
+  keys.forEach((key) => {
+    const industry = industryMap.get(key)
+    result.push(industry.parentId)
+  })
+  return result
+}
+// 寻找选中的行业，直到找到levelType为1的行业
+const changeTreeData = (targetKey: string,industryMap: Map<string, any>,originTreeData: any[]) => {
+  let secondIndustry = industryMap.get(targetKey)
+  while (secondIndustry && secondIndustry.levelType !== 1) {
+    secondIndustry = industryMap.get(secondIndustry.parentId)
+  }
+  const newTreeData = originTreeData.map((item: any) => {
+    return {
+      ...item,
+      disabled: item.industryId !== secondIndustry.parentId,
+      children: item.industryId !== secondIndustry.parentId ? setDisabled(item.children, true) : item.children.map((child: any) => {
+        return {
+          ...child,
+          disabled: child.industryId !== secondIndustry.industryId,
+          children: child.industryId !== secondIndustry.industryId ? setDisabled(child.children, true) : child.children
+        }
+      })
+    }
+  })
+  return {newTreeData,secondIndustry}
+}
+// 组装选中的行业路径数据
+const assembleSelectedIndustry = (value: any,industryMap: Map<string, any>) => {
+  // 过滤出所有3级行业
+  const leafIndustry:any[] = []
+  value.forEach((key: string) => {
+    const industry = industryMap.get(key)
+    if(industry.levelType === 3){
+      leafIndustry.push(industry)
+    }
+  })
+  // 使用set去重获取所有父行业id
+  const parentidsArray = Array.from(new Set(leafIndustry.map((item: any) => item.parentId)))
+  // 递归查找父行业
+  const parentIndustry = parentidsArray.map((item: any) => industryMap.get(item))
+  // 将leafIndustry 放在对应父行业children中
+  const result:any[] = parentIndustry.map((item: any) => ({
+    ...item,
+    children: leafIndustry.filter((child: any) => child.parentId === item.industryId)
+  }))
+  return result
+}
 const UserCenter = () => {
-  // //  1.保存菜单权限分配接口
-  // // 入参
-  // const params = {
-  //   type:'imp', // 实施机构菜单imp，运营机构菜单opt
-  //   userIds:'1,2,3,4', // 用户id 逗号分隔的字符串
-  // }
-
-  // // 2. 获取菜单权限分配详情
-  // // 出参
-  // const data = {
-  //   impUserIds:[], // 实施机构菜单分配的用户id数组
-  //   optUserIds:[], // 运营机构菜单分配的用户id数组
-  // }
-
-  // // 3. 登录用户的个人信息返回菜单权限字段
-  // // 出参
-  // const userInfo = {
-  //   menuShow:['imp','opt'],// ['imp'] 只有实施机构菜单权限， ['opt'] 只有运营机构菜单权限， ['imp','opt'] 两个都有
-  // }
-  const formRef = useRef<FormInstance>(null)
-  const onFinish = (values: any) => {
-    console.log('Received values of form: ', values)
+  const formRef = useRef<any>(null)
+  // 行业分类树
+  const [treeData, setTreeData] = useState(transformTree(industryList))
+  // 选中的行业
+  const [selectedIndustry, setSelectedIndustry] = useState<any[]>([])
+  // 树展开的key
+  const [treeExpandedKeys, setTreeExpandedKeys] = useState<any[]>([])
+  const onTreeSelectChange = (value: any, label: any, extra: any) => {
+    if (value.length === 0) {
+      formRef.current?.setFieldsValue({
+        dataRegisterNameIndustry: ''
+      })
+      setSelectedIndustry([])
+      setTreeData(transformTree(industryList))
+    } else {
+      const target = value[value.length - 1]
+      const originTreeData = transformTree(industryList)
+      const {newTreeData,secondIndustry} = changeTreeData(target,industryMap,originTreeData)
+      formRef.current?.setFieldsValue({
+        dataRegisterNameIndustry: secondIndustry.name
+      })
+      const industryChildren = assembleSelectedIndustry(value,industryMap)
+      setSelectedIndustry([{
+        ...secondIndustry,
+        children: industryChildren
+      }])
+      setTreeData(newTreeData)
+    }
   }
   useEffect(() => {
-    // formRef.current?.setFieldsValue({
-    //   uploadImg: []
-    // })
-  }, [])
+    const fullValue = ['0111','0121']
+    const target = fullValue[fullValue.length - 1]
+    const originTreeData = transformTree(industryList)
+    const {newTreeData,secondIndustry} = changeTreeData(target,industryMap,originTreeData) 
+    setTreeData(newTreeData)
+    formRef.current?.setFieldsValue({
+      industry: fullValue,
+      dataRegisterNameIndustry: secondIndustry.name || ''
+    })
+    setTreeExpandedKeys(findExpandedKeys(fullValue,industryMap))
+  }, [formRef])
+  useEffect(() => {
+    console.log('selectedIndustry',selectedIndustry)
+  }, [selectedIndustry])
   return (
     <div className={styles.userCenterWrapper}>
       <div className={styles.userCenterContent}>
-        {/* <Form
-          labelCol={{ span: 4 }}
-          layout="horizontal"
-          onFinish={onFinish}
-          ref={formRef}
-          wrapperCol={{ span: 14 }}
-        >
-          <Form.Item htmlFor={undefined} label="姓名" name="name">
-            <Input />
-          </Form.Item>
-          <Form.Item initialValue={[]} label="上传图片" name="uploadImg">
-            <UploadPicture />
-          </Form.Item>
-          <Form.Item htmlFor={undefined} label="上传文件" name="uploadFile">
-            <Upload action="/upload.do" name="uploadFile">
-              <Button icon={<UploadOutlined />}>Click to upload</Button>
-            </Upload>
-          </Form.Item>
-          <Form.Item wrapperCol={{ offset: 4, span: 14 }}>
-            <Button htmlType="submit" type="primary">
-              Submit
-            </Button>
-          </Form.Item>
-        </Form> */}
-        <ProForm>
-          <ProFormText
-            dependencies={[['contract', 'name']]}
-            label="签约客户名称"
-            name="name"
-            placeholder="请输入客户名称"
-            required
-            rules={[{ required: true, message: '此项为必填项' }]}
-            tooltip="最长 24 个字符"
-            width="md"
+        <ProForm formRef={formRef}>
+          <ProFormTreeSelect
+            fieldProps={{
+              showSearch: true,
+              allowClear: true,
+              autoClearSearchValue: true,
+              treeNodeFilterProp: 'title',
+              treeData: treeData,
+              multiple: true,
+              treeDefaultExpandedKeys: treeExpandedKeys,
+              fieldNames: {
+                label: 'title'
+              },
+              onChange: (value, label, extra) => {
+                onTreeSelectChange(value, label, extra)
+              }
+            }}
+            name="industry"
+            placeholder="请选择"
+            width={330}
           />
           <ProFormText
-            dependencies={[['contract', 'name']]}
-            htmlFor={null}
-            label="签约客户名称"
-            name="name1"
-            placeholder="请输入客户名称"
+            label="行业名称"
+            name="dataRegisterNameIndustry"
+            placeholder="请输入行业名称"
             required
             rules={[{ required: true, message: '此项为必填项' }]}
             tooltip="最长 24 个字符"
