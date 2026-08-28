@@ -2,6 +2,8 @@ import styles from './index.module.less'
 import { ProForm, ProFormText, ProFormTreeSelect } from '@ant-design/pro-components'
 import industryList from './data'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import HotPage from './components/HotPage'
+
 // 转换树结构，添加key、value、title、selectable、isLeaf、disabled属性
 const transformTree = (tree: any[]) => {
   return tree.map((item: any) => {
@@ -144,6 +146,7 @@ const UserCenter = () => {
   }, [selectedIndustry])
   return (
     <div className={styles.userCenterWrapper}>
+      <HotPage />
       <div className={styles.userCenterContent}>
         <ProForm formRef={formRef}>
           <ProFormTreeSelect
