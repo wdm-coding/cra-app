@@ -1,0 +1,26 @@
+.marquee-container {
+  max-width: 100%; 
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.marquee-text {
+  display: inline-block;
+  animation: none; 
+}
+
+.marquee-text.is-scrolling {
+  animation: marquee-scroll 20s linear infinite;
+}
+
+.marquee-text.is-scrolling::after {
+  content: attr(data-text);
+  padding-left: 30px; 
+}
+.marquee-text.is-scrolling:hover {
+  animation-play-state: paused;
+}
+@keyframes marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}

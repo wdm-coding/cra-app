@@ -14,7 +14,7 @@ const PortalHeader:React.FC<Props> = ({navMenus,pageTitle}) => {
   }, [pathname])
   const navItemClick = (item:any) => {
     if(item.key === 'backstage'){
-      alert('功能节点后台');
+      navigate(`/manager`);
       return;
     }
     navigate(`/fnodePortal${item.path}`);

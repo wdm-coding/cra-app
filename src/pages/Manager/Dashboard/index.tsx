@@ -1,15 +1,11 @@
-import { useNavigate } from 'react-router-dom'
+import MarqueeText from '@/components/MarqueeText'
+import styles from './index.less'
 const Dashboard = () => {
-  const navigate = useNavigate()
-
   return (
-    <h1
-      onClick={() => {
-        navigate('/login')
-      }}
-    >
-      Dashboard
-    </h1>
+    <div className={styles.dashboardContainer}>
+      <MarqueeText text="这是一段短文本。" />
+      <MarqueeText text="这是一段超长文本，当它超出容器宽度时会自动无缝滚动，如果不超出则保持静止。" />
+    </div>
   )
 }
 
