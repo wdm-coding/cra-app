@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { useMemo, useEffect, useRef } from 'react'
 import FallbackLoading from '@/components/FallbackLoading'
 // 路由白名单
-const whiteList = ['/', '/client', '/login', '/403', '/404', '/client/home', '/dnp/redirect']
+const whiteList = ['/', '/client', '/login', '/403', '/404', '/client/home', '/dnp/redirect', '/test-login']
 const NavigeteBack = () => {
   const navigate = useNavigate()
   useEffect(() => {
